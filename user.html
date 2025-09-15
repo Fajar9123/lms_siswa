@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-up Materi Modern</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #FF7F32;
+            --light-orange: #FFF2E8;
+            --dark-text: #212121;
+            --body-text: #424242;
+            --gray-text: #757575;
+            --background: #F4F7FE;
+            --success-green: #4CAF50;
+            --border-radius: 16px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            margin: 0;
+            height: 100vh;
+            display: grid;
+            place-content: center;
+        }
+
+        /* Tombol Pemicu */
+        .btn-buka-materi {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 127, 50, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-buka-materi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 127, 50, 0.5);
+        }
+        
+        .btn-buka-materi i {
+            margin-right: 10px;
+        }
+
+        /* Lapisan Overlay untuk Pop-up */
+        .materi-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .materi-popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Konten Pop-up */
+        .materi-popup-content {
+            background-color: white;
+            width: 90%;
+            max-width: 650px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .materi-popup-overlay.show .materi-popup-content {
+             transform: scale(1);
+        }
+
+        /* Kolom Kiri: Visual */
+        .popup-visual {
+            width: 200px;
+            background-color: var(--light-orange);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-visual i {
+            font-size: 5rem;
+            color: var(--primary-orange);
+            opacity: 0.8;
+        }
+        
+        /* Kolom Kanan: Detail */
+        .popup-details {
+            padding: 2rem;
+            flex: 1;
+            position: relative;
+        }
+        
+        .popup-tag {
+            background-color: var(--light-orange);
+            color: var(--primary-orange);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .popup-details h3 {
+            font-size: 1.6rem;
+            color: var(--dark-text);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .popup-details p {
+            font-size: 0.95rem;
+            color: var(--body-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .popup-keypoints h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.8rem;
+        }
+
+        .popup-keypoints ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+
+        .popup-keypoints li {
+            color: var(--gray-text);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .popup-keypoints li i {
+            color: var(--success-green);
+            margin-right: 10px;
+        }
+        
+        .btn-mulai-belajar {
+            background: var(--dark-text);
+            color: white;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-mulai-belajar:hover {
+            background-color: #000;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--gray-text);
+            transition: all 0.2s;
+        }
+        
+        .close-btn:hover {
+            background-color: #e0e0e0;
+            transform: rotate(90deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .materi-popup-content {
+                flex-direction: column;
+                max-width: 350px;
+            }
+            .popup-visual {
+                width: 100%;
+                height: 150px;
+            }
+            .popup-details {
+                padding: 1.5rem;
+            }
+            .popup-details h3 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-buka-materi" id="open-popup-btn">
+        <i class="fas fa-book-open"></i>Lihat Info Materi
+    </button>
+    
+    <div class="materi-popup-overlay" id="materi-popup">
+        <div class="materi-popup-content">
+            <div class="popup-visual">
+                <i class="fas fa-server"></i>
+            </div>
+            
+            <div class="popup-details">
+                <button class="close-btn" id="close-popup-btn"><i class="fas fa-times"></i></button>
+                <span class="popup-tag">TKJ</span>
+                <h3>Instalasi Web Server</h3>
+                <p>
+                    Panduan ringkas untuk pemula dalam menginstal dan menjalankan web server pertama Anda.
+                </p>
+
+                <div class="popup-keypoints">
+                    <h4>Apa yang akan dipelajari:</h4>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Prinsip dasar Web Server</li>
+                        <li><i class="fas fa-check-circle"></i> Instalasi Apache2 di Linux</li>
+                        <li><i class="fas fa-check-circle"></i> Pengujian & verifikasi instalasi</li>
+                    </ul>
+                </div>
+                
+                <a href="#" class="btn-mulai-belajar">Mulai Belajar Sekarang</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('open-popup-btn');
+        const closeBtn = document.getElementById('close-popup-btn');
+        const popup = document.getElementById('materi-popup');
+
+        // Fungsi untuk membuka pop-up
+        const openPopup = () => {
+            popup.classList.add('show');
+        };
+
+        // Fungsi untuk menutup pop-up
+        const closePopup = () => {
+            popup.classList.remove('show');
+        };
+
+        // Event listener
+        openBtn.addEventListener('click', openPopup);
+        closeBtn.addEventListener('click', closePopup);
+        
+        // Menutup pop-up saat mengklik area overlay
+        popup.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+
+    </script>
+
+</body>
+</html>
