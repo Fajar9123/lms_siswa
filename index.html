@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLMS - Platform Belajar TKJ & DKV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==================================== */
+        /* === 1. Global & Utility Styles === */
+        /* ==================================== */
+        :root {
+            --primary-orange: #FF7F32;
+            --secondary-orange: #FF9B50;
+            --accent-pink: #FFD495;
+            --light-white: #F9F7F7;
+            --dark-text: #212121;
+            --gray-text: #666666;
+            --soft-gray: #EAEAEA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-white);
+            color: var(--dark-text);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-orange);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            border: 2px solid var(--dark-text);
+            color: var(--dark-text);
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--dark-text);
+            color: white;
+        }
+
+        .btn-primary-orange {
+            background: var(--primary-orange);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 127, 50, 0.3);
+        }
+
+        .btn-primary-orange:hover {
+            background: #e86a21;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 127, 50, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--dark-text);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #555555;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary-orange);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray-text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==================================== */
+        /* === 2. Header & Navigation Styles === */
+        /* ==================================== */
+        header {
+            background: white;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--primary-orange);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-orange);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a i {
+            margin-right: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-orange);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--dark-text);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--primary-orange);
+        }
+
+        .mobile-menu-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background-color: var(--dark-text);
+            color: white;
+            padding: 2rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 150;
+            overflow-y: auto;
+        }
+
+        .mobile-menu-drawer.is-active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-drawer .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 2rem;
+            color: var(--soft-gray);
+            cursor: pointer;
+        }
+
+        .mobile-menu-drawer ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .mobile-menu-drawer a {
+            color: white;
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-drawer a:hover, .mobile-menu-drawer a.active {
+            color: var(--primary-orange);
+        }
+
+        .mobile-menu-drawer .user-actions {
+            margin-top: 2rem;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* ==================================== */
+        /* === 3. Hero Section Styles === */
+        /* ==================================== */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/smkjt1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        .hero h2 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .search-bar button {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            color: var(--primary-orange);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        /* ==================================== */
+        /* === 4. Programs & Course Styles === */
+        /* ==================================== */
+        .programs, .courses, .testimonials, .cta, .stats {
+            padding: 4rem 0;
+        }
+
+        .program-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.767);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgb(255, 254, 254);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .tkj-header {
+            background: var(--dark-text);
+        }
+
+        .dkv-header {
+            background: var(--primary-orange);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-text);
+        }
+
+        .card-body p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-text);
+        }
+
+        .card-body ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-body li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--soft-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-body li:last-child {
+            border-bottom: none;
+        }
+
+        .card-body i {
+            color: var(--primary-orange);
+        }
+
+        .courses {
+            background: var(--soft-gray);
+        }
+
+        .course-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            display: none;
+        }
+
+        .course-card.show {
+            display: block;
+        }
+
+        .course-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .course-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .course-card:hover .course-img img {
+            transform: scale(1.05);
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .tkj-category {
+            background: rgba(51, 51, 51, 0.1);
+            color: var(--dark-text);
+        }
+
+        .dkv-category {
+            background: rgba(255, 127, 50, 0.1);
+            color: var(--primary-orange);
+        }
+
+        .course-content h3 {
+            margin-bottom: 0.8rem;
+            color: var(--dark-text);
+        }
+
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-info .icon-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--soft-gray);
+            padding-top: 1rem;
+        }
+
+        .rating i {
+            color: #FFC107;
+        }
+
+        .course-price {
+            font-weight: 700;
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+        }
+
+        /* ==================================== */
+        /* === 5. Testimonial Section Styles === */
+        /* ==================================== */
+        .testimonials {
+            background: white;
+        }
+
+        .testimonial-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--light-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray-text);
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .testimonial-author span {
+            display: block;
+            font-weight: 400;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+        }
+
+        /* ==================================== */
+        /* === 6. Stats Section Styles === */
+        /* ==================================== */
+        .stats {
+            background: linear-gradient(to right, var(--primary-orange), var(--secondary-orange));
+            color: white;
+            text-align: center;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-pink);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-text {
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* ==================================== */
+        /* === 7. Call to Action (CTA) Styles === */
+        /* ==================================== */
+        .cta {
+            background: var(--dark-text);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-container {
+            padding: 3rem;
+            border-radius: 12px;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* ==================================== */
+        /* === 8. Footer Styles === */
+        /* ==================================== */
+        footer {
+            background: var(--dark-text);
+            color: white;
+            padding: 3rem 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-orange);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #444;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #444;
+            color: #ccc;
+        }
+
+        /* ==================================== */
+        /* === 9. Modal (Pop-up) Styles === */
+        /* ==================================== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease, display 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark-text);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--gray-text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 127, 50, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--gray-text);
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--dark-text);
+        }
+
+        .modal-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        /* ==================================== */
+        /* === 10. Responsive Design === */
+        /* ==================================== */
+        /* Perubahan untuk tampilan mobile */
+        @media (max-width: 992px) {
+            /* Sembunyikan navigasi utama di layar desktop */
+            nav#main-nav {
+                display: none;
+            }
+
+            /* Tampilkan tombol menu mobile */
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            /* Atur ulang tata letak tombol user-actions agar di samping tombol menu */
+            .user-actions {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                order: 1; /* Pindah ke posisi normal */
+            }
+
+            /* Tombol login/daftar di header disembunyikan di mobile */
+            .user-actions .btn {
+                display: none;
+            }
+        }
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+            }
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+            .search-bar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 10px;
+                border-radius: 25px;
+            }
+            .search-bar input, .search-bar button {
+                border-radius: 25px;
+            }
+            .programs, .courses, .testimonials, .cta, .stats {
+                padding: 3rem 0;
+            }
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main-content">
+        <header>
+            <div class="container header-container">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>EduLMS</h1>
+                </div>
+                <nav id="main-nav">
+                    <ul>
+                        <li><a href="#beranda" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                        <li><a href="#programs"><i class="fas fa-book"></i> Program</a></li>
+                        <li><a href="#courses"><i class="fas fa-book-open"></i> Materi</a></li>
+                        <li><a href="#testimonials"><i class="fas fa-comment-alt"></i> Testimoni</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <button class="btn btn-outline-dark" id="login-btn">Masuk</button>
+                    <button class="btn btn-primary-orange" id="register-btn">Daftar</button>
+                    <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="mobile-menu-drawer" id="mobile-menu">
+            <span class="close-btn">&times;</span>
+            <nav>
+                <ul>
+                    <li><a href="#beranda" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="#programs"><i class="fas fa-book"></i> Program</a></li>
+                    <li><a href="#courses"><i class="fas fa-book-open"></i> Materi</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-comment-alt"></i> Testimoni</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-outline-dark" id="mobile-login-btn">Masuk</button>
+                <button class="btn btn-primary-orange" id="mobile-register-btn">Daftar</button>
+            </div>
+        </div>
+
+        <section class="hero" id="beranda">
+            <div class="hero-content">
+                <h2>Pembelajaran Online </h2>
+                <p>Tingkatkan skill dan raih prestasi dengan materi pembelajaran terstruktur dan interaktif.</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Cari kursus, materi, atau guru...">
+                    <button><i class="fas fa-search"></i> Cari</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="programs" id="programs">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Program Belajar</h2>
+                    <p>Pilih program sesuai dengan minat dan jurusan Anda untuk mendapatkan jalur pembelajaran yang terarah.</p>
+                </div>
+                <div class="program-cards">
+                    <div class="program-card">
+                        <div class="card-header tkj-header">
+                            <h3>Teknik Komputer Jaringan</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Kuasi ilmu jaringan komputer, pemrograman, dan sistem operasi yang esensial untuk karir IT masa depan.</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Jaringan Dasar (LAN, WAN)</li>
+                                <li><i class="fas fa-check-circle"></i> Administrasi Server (Linux, Windows)</li>
+                                <li><i class="fas fa-check-circle"></i> Keamanan Jaringan (Cybersecurity)</li>
+                                <li><i class="fas fa-check-circle"></i> Pemrograman Web (Backend, Frontend)</li>
+                            </ul>
+                            <a href="#courses" class="btn btn-secondary">Lihat Kursus TKJ</a>
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <div class="card-header dkv-header">
+                            <h3>Desain Komunikasi Visual</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Eksplorasi kreativitas dalam desain grafis, multimedia, dan animasi untuk menciptakan karya yang memukau.</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Desain Grafis (Photoshop, Illustrator)</li>
+                                <li><i class="fas fa-check-circle"></i> Animasi 2D & 3D (Blender, After Effects)</li>
+                                <li><i class="fas fa-check-circle"></i> Fotografi Digital & Editing</li>
+                                <li><i class="fas fa-check-circle"></i> Editing Video (Premiere Pro)</li>
+                            </ul>
+                            <a href="#courses" class="btn btn-primary-orange">Lihat Kursus DKV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="courses" id="courses">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Materi Pilihan</h2>
+                    <p>Pembelajaran yang dirancang untuk memenuhi kebutuhan Anda.</p>
+                </div>
+                <div class="course-filters">
+                    <button class="filter-btn active" data-filter="all">Semua</button>
+                    <button class="filter-btn" data-filter="tkj">TKJ</button>
+                    <button class="filter-btn" data-filter="dkv">DKV</button>
+                    <button class="filter-btn" data-filter="beginner">Pemula</button>
+                    <button class="filter-btn" data-filter="advanced">Lanjutan</button>
+                </div>
+                <div class="course-grid" id="course-grid">
+                    <div class="course-card" data-category="tkj beginner">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Jaringan+Dasar" alt="Kursus Jaringan Dasar"></div>
+                        <div class="course-content">
+                            <span class="course-category tkj-category">TKJ</span>
+                            <h3>Pengenalan Jaringan Komputer</h3>
+                            <div class="course-info">
+                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Pemula</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 20 Jam</div>
+                            </div>
+                            <p>Pelajari dasar-dasar jaringan komputer, mulai dari topologi hingga pengkabelan.</p>
+                            <div class="course-footer">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i> 4.8
+                                </div>
+                                <div class="course-price">Rp 150.000</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card" data-category="dkv advanced">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Animasi+Blender" alt="Kursus Animasi 3D"></div>
+                        <div class="course-content">
+                            <span class="course-category dkv-category">DKV</span>
+                            <h3>Animasi 3D Menggunakan Blender</h3>
+                            <div class="course-info">
+                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Lanjutan</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 45 Jam</div>
+                            </div>
+                            <p>Kuasai teknik animasi 3D profesional untuk menciptakan karakter dan adegan yang realistis.</p>
+                            <div class="course-footer">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i> 5.0
+                                </div>
+                                <div class="course-price">Rp 300.000</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card" data-category="tkj advanced">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Cyber+Security" alt="Kursus Keamanan Jaringan"></div>
+                        <div class="course-content">
+                            <span class="course-category tkj-category">TKJ</span>
+                            <h3>Dasar Keamanan Jaringan</h3>
+                            <div class="course-info">
+                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Lanjutan</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 50 Jam</div>
+                            </div>
+                            <p>Pelajari cara melindungi data dan sistem dari ancaman siber dengan materi keamanan jaringan.</p>
+                            <div class="course-footer">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i> 4.9
+                                </div>
+                                <div class="course-price">Rp 450.000</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card" data-category="dkv beginner">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Desain+Grafis" alt="Kursus Desain Grafis"></div>
+                        <div class="course-content">
+                            <span class="course-category dkv-category">DKV</span>
+                            <h3>Pengantar Desain Grafis dengan Photoshop</h3>
+                            <div class="course-info">
+                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Pemula</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 25 Jam</div>
+                            </div>
+                            <p>Kursus dasar untuk pemula yang ingin menguasai software desain paling populer, Adobe Photoshop.</p>
+                            <div class="course-footer">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i> 4.7
+                                </div>
+                                <div class="course-price">Rp 175.000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Apa Kata Mereka?</h2>
+                    <p>Dengar pengalaman dari para siswa yang telah berhasil.</p>
+                </div>
+                <div class="testimonial-slider">
+                    <div class="testimonial-card">
+                        <p>"Materi yang disajikan sangat mudah dipahami, bahkan untuk saya yang masih pemula. Instrukturnya juga sangat sabar dan membantu."</p>
+                        <div class="testimonial-author">
+                            Budi Santoso
+                            <span>Siswa TKJ</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Kursus DKV di sini membuka mata saya tentang dunia desain. Kualitas materinya top dan sangat relevan dengan industri."</p>
+                        <div class="testimonial-author">
+                            Siti Aisyah
+                            <span>Siswa DKV</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Saya jadi lebih percaya diri untuk mengikuti kompetisi berkat materi yang lengkap dan latihan yang intensif."</p>
+                        <div class="testimonial-author">
+                            Joko Susilo
+                            <span>Siswa TKJ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container stats-container">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-text">Siswa Terdaftar</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <div class="stat-number">50+</div>
+                    <div class="stat-text">Instruktur Profesional</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-book-reader"></i>
+                    <div class="stat-number">100+</div>
+                    <div class="stat-text">Materi Pembelajaran</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-award"></i>
+                    <div class="stat-number">15+</div>
+                    <div class="stat-text">Sertifikasi Kompetensi</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" id="contact">
+            <div class="container cta-container">
+                <h2>Siap Tingkatkan Potensi Dirimu?</h2>
+                <p>Mulai perjalanan belajarmu sekarang dan raih karir impian di bidang TKJ atau DKV!</p>
+                <a href="#" class="btn btn-primary-orange">Daftar Sekarang</a>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container footer-container">
+                <div class="footer-col">
+                    <h3>EduLMS</h3>
+                    <p>Platform pembelajaran online terdepan untuk siswa TKJ & DKV. </p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Jelajahi</h3>
+                    <ul>
+                        <li><a href="#beranda">Beranda</a></li>
+                        <li><a href="#programs">Program</a></li>
+                        <li><a href="#courses">Materi</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Sumber Daya</h3>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Pusat Bantuan</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Pendidikan No. 123, Jakarta</li>
+                        <li><i class="fas fa-envelope"></i> info@edulms.com</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 EduLMS. Hak Cipta Dilindungi.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Masuk ke Akun Anda</h2>
+            <form>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary-orange" style="width: 100%;">Masuk</button>
+            </form>
+            <div class="modal-toggle">
+                Belum punya akun? <a href="#" id="show-register">Daftar sekarang</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Daftar Akun Baru</h2>
+            <form>
+                <div class="form-group">
+                    <label for="register-name">Nama Lengkap</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary-orange" style="width: 100%;">Daftar</button>
+            </form>
+            <div class="modal-toggle">
+                Sudah punya akun? <a href="#" id="show-login">Masuk sekarang</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar Menu Logic
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeBtn = mobileMenu.querySelector('.close-btn');
+            const mainContent = document.getElementById('main-content');
+
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('is-active');
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            closeBtn.addEventListener('click', toggleMobileMenu);
+
+            // Close menu when a link is clicked
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('is-active');
+                });
+            });
+
+            // Modal Logic (existing code)
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const mobileLoginBtn = document.getElementById('mobile-login-btn');
+            const mobileRegisterBtn = document.getElementById('mobile-register-btn');
+            const loginModal = document.getElementById('login-modal');
+            const registerModal = document.getElementById('register-modal');
+            const closeBtns = document.querySelectorAll('.modal .close-btn');
+            const showRegisterLink = document.getElementById('show-register');
+            const showLoginLink = document.getElementById('show-login');
+
+            // Show Login Modal
+            function showModal(modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Hide Modal
+            function hideModal(modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+
+            loginBtn.addEventListener('click', () => showModal(loginModal));
+            registerBtn.addEventListener('click', () => showModal(registerModal));
+            mobileLoginBtn.addEventListener('click', () => {
+                hideModal(mobileMenu);
+                showModal(loginModal);
+            });
+            mobileRegisterBtn.addEventListener('click', () => {
+                hideModal(mobileMenu);
+                showModal(registerModal);
+            });
+
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    hideModal(e.target.closest('.modal'));
+                });
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === loginModal) {
+                    hideModal(loginModal);
+                }
+                if (event.target === registerModal) {
+                    hideModal(registerModal);
+                }
+            });
+
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideModal(loginModal);
+                showModal(registerModal);
+            });
+
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideModal(registerModal);
+                showModal(loginModal);
+            });
+
+            // Course Filter Logic
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const courseCards = document.querySelectorAll('.course-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    btn.classList.add('active');
+                    const filterValue = btn.getAttribute('data-filter');
+                    filterCourses(filterValue);
+                });
+            });
+
+            function filterCourses(filter) {
+                courseCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Initial display for all courses
+            filterCourses('all');
+        });
+    </script>
+</body>
+</html>
