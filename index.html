@@ -345,7 +345,7 @@
         /* ==================================== */
         /* === 4. Programs & Course Styles === */
         /* ==================================== */
-        .programs, .courses, .testimonials, .cta, .stats {
+        .programs, .courses, .features, .cta, .stats {
             padding: 4rem 0;
         }
 
@@ -359,7 +359,7 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.767);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -367,7 +367,7 @@
 
         .program-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgb(255, 254, 254);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
 
         .card-header {
@@ -464,11 +464,11 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             position: relative;
-            display: none;
+            display: none; /* Default hidden */
         }
-
+        
         .course-card.show {
-            display: block;
+            display: block; /* Show filtered items */
         }
 
         .course-img {
@@ -547,106 +547,52 @@
             color: var(--primary-orange);
             font-size: 1.2rem;
         }
-
-        /* ==================================== */
-        /* === 5. Testimonial Section Styles === */
-        /* ==================================== */
-        .testimonials {
-            background: white;
-        }
-
-        .testimonial-slider {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
+        
+        /* ==================================================== */
+        /* === 5. Keunggulan (Features) Section Styles (BARU) === */
+        /* ==================================================== */
+        .features {
             background: var(--light-white);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s ease;
         }
 
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .testimonial-card p {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            color: var(--gray-text);
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--dark-text);
-        }
-
-        .testimonial-author span {
-            display: block;
-            font-weight: 400;
-            color: var(--gray-text);
-            font-size: 0.9rem;
-        }
-
-        /* ==================================== */
-        /* === 6. Stats Section Styles === */
-        /* ==================================== */
-        .stats {
-            background: linear-gradient(to right, var(--primary-orange), var(--secondary-orange));
-            color: white;
-            text-align: center;
-        }
-
-        .stats-container {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
-        .stat-item i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent-pink);
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .stat-number {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon i {
+            font-size: 3rem;
+            color: var(--primary-orange);
+        }
+
+        .feature-item h3 {
+            font-size: 1.25rem;
+            color: var(--dark-text);
             margin-bottom: 0.5rem;
         }
 
-        .stat-text {
-            font-size: 1rem;
-            font-weight: 300;
-        }
-
-        /* ==================================== */
-        /* === 7. Call to Action (CTA) Styles === */
-        /* ==================================== */
-        .cta {
-            background: var(--dark-text);
-            color: white;
-            text-align: center;
-        }
-
-        .cta-container {
-            padding: 3rem;
-            border-radius: 12px;
-        }
-
-        .cta h2 {
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+        .feature-item p {
+            color: var(--gray-text);
+            font-size: 0.95rem;
         }
 
         /* ==================================== */
@@ -655,13 +601,14 @@
         footer {
             background: var(--dark-text);
             color: white;
-            padding: 3rem 1.5rem;
+            padding: 4rem 1.5rem 2rem;
         }
 
         .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
 
         .footer-col h3 {
@@ -669,6 +616,7 @@
             margin-bottom: 1.5rem;
             position: relative;
             padding-bottom: 0.5rem;
+            color: white;
         }
 
         .footer-col h3::after {
@@ -681,12 +629,13 @@
             background: var(--primary-orange);
         }
 
-        .footer-col ul {
-            list-style: none;
+        .footer-col p, .footer-col ul li {
+            color: #ccc;
+            margin-bottom: 0.8rem;
         }
 
-        .footer-col ul li {
-            margin-bottom: 0.8rem;
+        .footer-col ul {
+            list-style: none;
         }
 
         .footer-col ul li a {
@@ -717,6 +666,7 @@
             color: white;
             text-decoration: none;
             transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
 
         .social-icons a:hover {
@@ -727,11 +677,11 @@
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            margin-top: 2rem;
             border-top: 1px solid #444;
             color: #ccc;
+            font-size: 0.9rem;
         }
-
+        
         /* ==================================== */
         /* === 9. Modal (Pop-up) Styles === */
         /* ==================================== */
@@ -749,7 +699,7 @@
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease, display 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .modal.show {
@@ -804,7 +754,7 @@
             box-shadow: 0 0 0 2px rgba(255, 127, 50, 0.2);
         }
 
-        .close-btn {
+        .modal .close-btn {
             position: absolute;
             top: 15px;
             right: 20px;
@@ -815,75 +765,72 @@
             transition: color 0.3s ease;
         }
 
-        .close-btn:hover {
+        .modal .close-btn:hover {
             color: var(--dark-text);
         }
 
         .modal-toggle {
             text-align: center;
             margin-top: 1.5rem;
+            font-size: 0.9rem;
         }
 
         /* ==================================== */
         /* === 10. Responsive Design === */
         /* ==================================== */
-        /* Perubahan untuk tampilan mobile */
         @media (max-width: 992px) {
-            /* Sembunyikan navigasi utama di layar desktop */
             nav#main-nav {
                 display: none;
             }
 
-            /* Tampilkan tombol menu mobile */
             .mobile-menu-btn {
                 display: block;
             }
-
-            /* Atur ulang tata letak tombol user-actions agar di samping tombol menu */
-            .user-actions {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                order: 1; /* Pindah ke posisi normal */
-            }
-
-            /* Tombol login/daftar di header disembunyikan di mobile */
-            .user-actions .btn {
+            
+            header .user-actions .btn-outline-dark,
+            header .user-actions .btn-primary-orange {
                 display: none;
             }
         }
+
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                gap: 0;
             }
+
             .hero {
                 padding: 4rem 1.5rem;
             }
+
             .search-bar {
                 flex-direction: column;
                 gap: 1rem;
                 padding: 10px;
                 border-radius: 25px;
             }
+
             .search-bar input, .search-bar button {
                 border-radius: 25px;
             }
-            .programs, .courses, .testimonials, .cta, .stats {
+
+            .programs, .courses, .features, .cta, .stats {
                 padding: 3rem 0;
             }
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            
             .footer-container {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
+            
             .footer-col h3::after {
                 left: 50%;
                 transform: translateX(-50%);
+            }
+            
+            .social-icons {
+                justify-content: center;
             }
         }
     </style>
@@ -901,7 +848,7 @@
                         <li><a href="#beranda" class="active"><i class="fas fa-home"></i> Beranda</a></li>
                         <li><a href="#programs"><i class="fas fa-book"></i> Program</a></li>
                         <li><a href="#courses"><i class="fas fa-book-open"></i> Materi</a></li>
-                        <li><a href="#testimonials"><i class="fas fa-comment-alt"></i> Testimoni</a></li>
+                        <li><a href="#fitur"><i class="fas fa-star"></i> Keunggulan</a></li>
                     </ul>
                 </nav>
                 <div class="user-actions">
@@ -921,7 +868,7 @@
                     <li><a href="#beranda" class="active"><i class="fas fa-home"></i> Beranda</a></li>
                     <li><a href="#programs"><i class="fas fa-book"></i> Program</a></li>
                     <li><a href="#courses"><i class="fas fa-book-open"></i> Materi</a></li>
-                    <li><a href="#testimonials"><i class="fas fa-comment-alt"></i> Testimoni</a></li>
+                    <li><a href="#fitur"><i class="fas fa-star"></i> Keunggulan</a></li>
                 </ul>
             </nav>
             <div class="user-actions">
@@ -932,10 +879,10 @@
 
         <section class="hero" id="beranda">
             <div class="hero-content">
-                <h2>Pembelajaran Online </h2>
+                <h2>LMS SMK Jakarta Timur 1</h2>
                 <p>Tingkatkan skill dan raih prestasi dengan materi pembelajaran terstruktur dan interaktif.</p>
                 <div class="search-bar">
-                    <input type="text" placeholder="Cari kursus, materi, atau guru...">
+                    <input type="text" placeholder="Cari Materi Pelajaran...">
                     <button><i class="fas fa-search"></i> Cari</button>
                 </div>
             </div>
@@ -960,7 +907,7 @@
                                 <li><i class="fas fa-check-circle"></i> Keamanan Jaringan (Cybersecurity)</li>
                                 <li><i class="fas fa-check-circle"></i> Pemrograman Web (Backend, Frontend)</li>
                             </ul>
-                            <a href="#courses" class="btn btn-secondary">Lihat Kursus TKJ</a>
+                            <a href="#courses" class="btn btn-secondary">Lihat Materi TKJ</a>
                         </div>
                     </div>
                     <div class="program-card">
@@ -975,7 +922,7 @@
                                 <li><i class="fas fa-check-circle"></i> Fotografi Digital & Editing</li>
                                 <li><i class="fas fa-check-circle"></i> Editing Video (Premiere Pro)</li>
                             </ul>
-                            <a href="#courses" class="btn btn-primary-orange">Lihat Kursus DKV</a>
+                            <a href="#courses" class="btn btn-primary-orange">Lihat Materi DKV</a>
                         </div>
                     </div>
                 </div>
@@ -986,206 +933,187 @@
             <div class="container">
                 <div class="section-title">
                     <h2>Materi Pilihan</h2>
-                    <p>Pembelajaran yang dirancang untuk memenuhi kebutuhan Anda.</p>
+                    <p>Pembelajaran yang dirancang untuk memenuhi kebutuhan industri kreatif dan teknologi terkini.</p>
                 </div>
                 <div class="course-filters">
                     <button class="filter-btn active" data-filter="all">Semua</button>
                     <button class="filter-btn" data-filter="tkj">TKJ</button>
                     <button class="filter-btn" data-filter="dkv">DKV</button>
-                    <button class="filter-btn" data-filter="beginner">Pemula</button>
-                    <button class="filter-btn" data-filter="advanced">Lanjutan</button>
                 </div>
-                <div class="course-grid" id="course-grid">
-                    <div class="course-card" data-category="tkj beginner">
-                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Jaringan+Dasar" alt="Kursus Jaringan Dasar"></div>
+                <div class="course-grid">
+                    <div class="course-card" data-category="tkj">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Dasar+Jaringan" alt="Jaringan Dasar"></div>
                         <div class="course-content">
                             <span class="course-category tkj-category">TKJ</span>
                             <h3>Pengenalan Jaringan Komputer</h3>
                             <div class="course-info">
-                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Pemula</div>
+                                <div class="icon-text"><i class="fas fa-user-graduate"></i> Pemula</div>
                                 <div class="icon-text"><i class="fas fa-clock"></i> 20 Jam</div>
                             </div>
-                            <p>Pelajari dasar-dasar jaringan komputer, mulai dari topologi hingga pengkabelan.</p>
                             <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i> 4.8
-                                </div>
-                                <div class="course-price">Rp 150.000</div>
+                                <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                                <div class="course-price">Materi</div>
                             </div>
                         </div>
                     </div>
-                    <div class="course-card" data-category="dkv advanced">
-                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Animasi+Blender" alt="Kursus Animasi 3D"></div>
+                    <div class="course-card" data-category="dkv">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Dasar+Desain" alt="Desain Grafis Dasar"></div>
                         <div class="course-content">
                             <span class="course-category dkv-category">DKV</span>
-                            <h3>Animasi 3D Menggunakan Blender</h3>
+                            <h3>Dasar Desain Grafis dengan Canva</h3>
                             <div class="course-info">
-                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Lanjutan</div>
-                                <div class="icon-text"><i class="fas fa-clock"></i> 45 Jam</div>
+                                <div class="icon-text"><i class="fas fa-user-graduate"></i> Pemula</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 15 Jam</div>
                             </div>
-                            <p>Kuasai teknik animasi 3D profesional untuk menciptakan karakter dan adegan yang realistis.</p>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i> 5.0
-                                </div>
-                                <div class="course-price">Rp 300.000</div>
+                           <div class="course-footer">
+                                <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                                <div class="course-price">Materi</div>
                             </div>
                         </div>
                     </div>
-                    <div class="course-card" data-category="tkj advanced">
-                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Cyber+Security" alt="Kursus Keamanan Jaringan"></div>
+                    <div class="course-card" data-category="tkj">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=MikroTik" alt="MikroTik"></div>
                         <div class="course-content">
                             <span class="course-category tkj-category">TKJ</span>
-                            <h3>Dasar Keamanan Jaringan</h3>
+                            <h3>Konfigurasi Router MikroTik</h3>
                             <div class="course-info">
-                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Lanjutan</div>
-                                <div class="icon-text"><i class="fas fa-clock"></i> 50 Jam</div>
+                                <div class="icon-text"><i class="fas fa-user-graduate"></i> Menengah</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 30 Jam</div>
                             </div>
-                            <p>Pelajari cara melindungi data dan sistem dari ancaman siber dengan materi keamanan jaringan.</p>
                             <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i> 4.9
-                                </div>
-                                <div class="course-price">Rp 450.000</div>
+                                <div class="rating"><i class="fas fa-star"></i> 4.7</div>
+                                <div class="course-price">Materi</div>
                             </div>
                         </div>
                     </div>
-                    <div class="course-card" data-category="dkv beginner">
-                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Kursus+Desain+Grafis" alt="Kursus Desain Grafis"></div>
+                    <div class="course-card" data-category="dkv">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Video+Editing" alt="Video Editing"></div>
                         <div class="course-content">
                             <span class="course-category dkv-category">DKV</span>
-                            <h3>Pengantar Desain Grafis dengan Photoshop</h3>
+                            <h3>Editing Video Profesional Premiere Pro</h3>
                             <div class="course-info">
-                                <div class="icon-text"><i class="fas fa-graduation-cap"></i> Pemula</div>
-                                <div class="icon-text"><i class="fas fa-clock"></i> 25 Jam</div>
+                                <div class="icon-text"><i class="fas fa-user-graduate"></i> Menengah</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 35 Jam</div>
                             </div>
-                            <p>Kursus dasar untuk pemula yang ingin menguasai software desain paling populer, Adobe Photoshop.</p>
+                           <div class="course-footer">
+                                <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                                <div class="course-price">Materi</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card" data-category="tkj">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Cyber+Security" alt="Cyber Security"></div>
+                        <div class="course-content">
+                            <span class="course-category tkj-category">TKJ</span>
+                            <h3>Dasar-Dasar Keamanan Siber</h3>
+                            <div class="course-info">
+                                <div class="icon-text"><i class="fas fa-user-graduate"></i> Lanjutan</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 40 Jam</div>
+                            </div>
                             <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i> 4.7
-                                </div>
-                                <div class="course-price">Rp 175.000</div>
+                                <div class="rating"><i class="fas fa-star"></i> 5.0</div>
+                                <div class="course-price">Materi</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card" data-category="dkv">
+                        <div class="course-img"><img src="https://via.placeholder.com/300x180.png?text=Animasi+3D" alt="Animasi 3D"></div>
+                        <div class="course-content">
+                            <span class="course-category dkv-category">DKV</span>
+                            <h3>Animasi 3D untuk Pemula dengan Blender</h3>
+                            <div class="course-info">
+                                <div class="icon-text"><i class="fas fa-user-graduate"></i> Pemula</div>
+                                <div class="icon-text"><i class="fas fa-clock"></i> 50 Jam</div>
+                            </div>
+                           <div class="course-footer">
+                                <div class="rating"><i class="fas fa-star"></i> 5.0</div>
+                                <div class="course-price">Materi</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section class="testimonials" id="testimonials">
+        
+        <section class="features" id="fitur">
             <div class="container">
                 <div class="section-title">
-                    <h2>Apa Kata Mereka?</h2>
-                    <p>Dengar pengalaman dari para siswa yang telah berhasil.</p>
+                    <h2>Keunggulan Platform EduLMS</h2>
+                    <p>Dirancang khusus untuk mendukung proses belajar mengajar di SMK Jakarta Timur 1.</p>
                 </div>
-                <div class="testimonial-slider">
-                    <div class="testimonial-card">
-                        <p>"Materi yang disajikan sangat mudah dipahami, bahkan untuk saya yang masih pemula. Instrukturnya juga sangat sabar dan membantu."</p>
-                        <div class="testimonial-author">
-                            Budi Santoso
-                            <span>Siswa TKJ</span>
-                        </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-sitemap"></i></div>
+                        <h3>Kurikulum Terstruktur</h3>
+                        <p>Materi ajar disajikan sesuai dengan kurikulum industri terbaru, memastikan relevansi keahlian siswa.</p>
                     </div>
-                    <div class="testimonial-card">
-                        <p>"Kursus DKV di sini membuka mata saya tentang dunia desain. Kualitas materinya top dan sangat relevan dengan industri."</p>
-                        <div class="testimonial-author">
-                            Siti Aisyah
-                            <span>Siswa DKV</span>
-                        </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                        <h3>Forum Diskusi Interaktif</h3>
+                        <p>Siswa dan guru dapat berdiskusi dan berkolaborasi secara online untuk memecahkan masalah.</p>
                     </div>
-                    <div class="testimonial-card">
-                        <p>"Saya jadi lebih percaya diri untuk mengikuti kompetisi berkat materi yang lengkap dan latihan yang intensif."</p>
-                        <div class="testimonial-author">
-                            Joko Susilo
-                            <span>Siswa TKJ</span>
-                        </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>Ujian & Penilaian Online</h3>
+                        <p>Laksanakan ujian, kuis, dan penilaian secara efisien dengan hasil yang dapat diakses real-time.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-folder-open"></i></div>
+                        <h3>Portofolio Digital Siswa</h3>
+                        <p>Setiap siswa dapat membangun portofolio digital untuk menampilkan karya terbaik mereka kepada industri.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="stats">
-            <div class="container stats-container">
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-text">Siswa Terdaftar</div>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <div class="stat-number">50+</div>
-                    <div class="stat-text">Instruktur Profesional</div>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-book-reader"></i>
-                    <div class="stat-number">100+</div>
-                    <div class="stat-text">Materi Pembelajaran</div>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-award"></i>
-                    <div class="stat-number">15+</div>
-                    <div class="stat-text">Sertifikasi Kompetensi</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta" id="contact">
-            <div class="container cta-container">
-                <h2>Siap Tingkatkan Potensi Dirimu?</h2>
-                <p>Mulai perjalanan belajarmu sekarang dan raih karir impian di bidang TKJ atau DKV!</p>
-                <a href="#" class="btn btn-primary-orange">Daftar Sekarang</a>
-            </div>
-        </section>
-
-        <footer>
-            <div class="container footer-container">
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-container">
                 <div class="footer-col">
-                    <h3>EduLMS</h3>
-                    <p>Platform pembelajaran online terdepan untuk siswa TKJ & DKV. </p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                    <h3>Tentang EduLMS</h3>
+                    <p>EduLMS adalah platform pembelajaran online yang didedikasikan untuk siswa kejuruan di bidang Teknik Komputer Jaringan (TKJ) dan Desain Komunikasi Visual (DKV).</p>
                 </div>
                 <div class="footer-col">
-                    <h3>Jelajahi</h3>
+                    <h3>Navigasi Cepat</h3>
                     <ul>
                         <li><a href="#beranda">Beranda</a></li>
                         <li><a href="#programs">Program</a></li>
                         <li><a href="#courses">Materi</a></li>
-                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="#fitur">Keunggulan</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Sumber Daya</h3>
+                    <h3>Program</h3>
                     <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Pusat Bantuan</a></li>
-                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#programs">Teknik Komputer Jaringan</a></li>
+                        <li><a href="#programs">Desain Komunikasi Visual</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Kontak</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Jl. Pendidikan No. 123, Jakarta</li>
-                        <li><i class="fas fa-envelope"></i> info@edulms.com</li>
-                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
-                    </ul>
+                    <h3>Hubungi Kami</h3>
+                    <p>Email: info@smkjaktim1.sch.id</p>
+                    <p>Telepon: (021) 123-4567</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2024 EduLMS. Hak Cipta Dilindungi.</p>
+                &copy; 2024 EduLMS untuk SMK Jakarta Timur 1. Semua Hak Cipta Dilindungi.
             </div>
-        </footer>
-    </div>
-    
+        </div>
+    </footer>
+
+
     <div id="login-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2>Masuk ke Akun Anda</h2>
+            <h2>Masuk Akun</h2>
             <form>
                 <div class="form-group">
                     <label for="login-email">Email</label>
@@ -1197,16 +1125,14 @@
                 </div>
                 <button type="submit" class="btn btn-primary-orange" style="width: 100%;">Masuk</button>
             </form>
-            <div class="modal-toggle">
-                Belum punya akun? <a href="#" id="show-register">Daftar sekarang</a>
-            </div>
+            <p class="modal-toggle">Belum punya akun? <a href="#" id="show-register">Daftar di sini</a></p>
         </div>
     </div>
 
     <div id="register-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2>Daftar Akun Baru</h2>
+            <h2>Buat Akun Baru</h2>
             <form>
                 <div class="form-group">
                     <label for="register-name">Nama Lengkap</label>
@@ -1222,121 +1148,122 @@
                 </div>
                 <button type="submit" class="btn btn-primary-orange" style="width: 100%;">Daftar</button>
             </form>
-            <div class="modal-toggle">
-                Sudah punya akun? <a href="#" id="show-login">Masuk sekarang</a>
-            </div>
+            <p class="modal-toggle">Sudah punya akun? <a href="#" id="show-login">Masuk di sini</a></p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Sidebar Menu Logic
+            // --- Elemen-elemen ---
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const closeBtn = mobileMenu.querySelector('.close-btn');
-            const mainContent = document.getElementById('main-content');
-
-            function toggleMobileMenu() {
-                mobileMenu.classList.toggle('is-active');
-            }
-
-            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-            closeBtn.addEventListener('click', toggleMobileMenu);
-
-            // Close menu when a link is clicked
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('is-active');
-                });
-            });
-
-            // Modal Logic (existing code)
-            const loginBtn = document.getElementById('login-btn');
-            const registerBtn = document.getElementById('register-btn');
-            const mobileLoginBtn = document.getElementById('mobile-login-btn');
-            const mobileRegisterBtn = document.getElementById('mobile-register-btn');
+            const mobileMenuDrawer = document.getElementById('mobile-menu');
+            const mobileMenuCloseBtn = mobileMenuDrawer.querySelector('.close-btn');
+            
             const loginModal = document.getElementById('login-modal');
             const registerModal = document.getElementById('register-modal');
-            const closeBtns = document.querySelectorAll('.modal .close-btn');
+
+            // Tombol untuk membuka modal
+            const openLoginButtons = document.querySelectorAll('#login-btn, #mobile-login-btn');
+            const openRegisterButtons = document.querySelectorAll('#register-btn, #mobile-register-btn');
+
+            // Tombol untuk menutup modal
+            const closeButtons = document.querySelectorAll('.modal .close-btn');
+
+            // Link untuk switch antar modal
             const showRegisterLink = document.getElementById('show-register');
             const showLoginLink = document.getElementById('show-login');
-
-            // Show Login Modal
-            function showModal(modal) {
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-
-            // Hide Modal
-            function hideModal(modal) {
-                modal.classList.remove('show');
-                document.body.style.overflow = 'auto';
-            }
-
-            loginBtn.addEventListener('click', () => showModal(loginModal));
-            registerBtn.addEventListener('click', () => showModal(registerModal));
-            mobileLoginBtn.addEventListener('click', () => {
-                hideModal(mobileMenu);
-                showModal(loginModal);
-            });
-            mobileRegisterBtn.addEventListener('click', () => {
-                hideModal(mobileMenu);
-                showModal(registerModal);
-            });
-
-            closeBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    hideModal(e.target.closest('.modal'));
-                });
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target === loginModal) {
-                    hideModal(loginModal);
-                }
-                if (event.target === registerModal) {
-                    hideModal(registerModal);
-                }
-            });
-
-            showRegisterLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                hideModal(loginModal);
-                showModal(registerModal);
-            });
-
-            showLoginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                hideModal(registerModal);
-                showModal(loginModal);
-            });
-
-            // Course Filter Logic
-            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            // Filter materi
+            const filterButtons = document.querySelectorAll('.filter-btn');
             const courseCards = document.querySelectorAll('.course-card');
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelector('.filter-btn.active').classList.remove('active');
-                    btn.classList.add('active');
-                    const filterValue = btn.getAttribute('data-filter');
-                    filterCourses(filterValue);
-                });
-            });
+            // --- Fungsi ---
+            function openModal(modal) {
+                if (modal) modal.classList.add('show');
+            }
 
+            function closeModal(modal) {
+                if (modal) modal.classList.remove('show');
+            }
+            
             function filterCourses(filter) {
                 courseCards.forEach(card => {
-                    if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
-                        card.style.display = 'block';
+                    const category = card.dataset.category;
+                    if (filter === 'all' || category.includes(filter)) {
+                        card.classList.add('show');
                     } else {
-                        card.style.display = 'none';
+                        card.classList.remove('show');
                     }
                 });
             }
 
-            // Initial display for all courses
+            // --- Event Listeners ---
+
+            // 1. Fungsionalitas Menu Mobile (Sidebar)
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuDrawer.classList.add('is-active');
+            });
+
+            mobileMenuCloseBtn.addEventListener('click', () => {
+                mobileMenuDrawer.classList.remove('is-active');
+            });
+            
+            // 2. Fungsionalitas Buka Modal
+            openLoginButtons.forEach(btn => btn.addEventListener('click', () => {
+                closeModal(registerModal); 
+                openModal(loginModal);
+            }));
+
+            openRegisterButtons.forEach(btn => btn.addEventListener('click', () => {
+                closeModal(loginModal);
+                openModal(registerModal);
+            }));
+
+            // 3. Fungsionalitas Tutup Modal (dengan tombol X)
+            closeButtons.forEach(btn => btn.addEventListener('click', () => {
+                closeModal(loginModal);
+                closeModal(registerModal);
+            }));
+
+            // 4. Tutup modal jika klik di luar area konten
+            window.addEventListener('click', (event) => {
+                if (event.target === loginModal) {
+                    closeModal(loginModal);
+                }
+                if (event.target === registerModal) {
+                    closeModal(registerModal);
+                }
+            });
+            
+            // 5. Pindah dari modal login ke register
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal(loginModal);
+                openModal(registerModal);
+            });
+            
+            // 6. Pindah dari modal register ke login
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal(registerModal);
+                openModal(loginModal);
+            });
+            
+            // 7. Filter materi
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.dataset.filter;
+                    filterCourses(filter);
+                });
+            });
+
+            // Tampilkan semua materi saat halaman pertama kali dimuat
             filterCourses('all');
         });
     </script>
+
 </body>
 </html>
