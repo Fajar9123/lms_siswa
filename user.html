@@ -3,283 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pop-up Materi Modern</title>
+    <title>Dashboard Siswa - EduLMS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-orange: #FF7F32;
-            --light-orange: #FFF2E8;
+            --secondary-orange: #FF9B50;
             --dark-text: #212121;
             --body-text: #424242;
             --gray-text: #757575;
-            --background: #F4F7FE;
-            --success-green: #4CAF50;
-            --border-radius: 16px;
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --background: #F4F7FE; /* Warna latar belakang yang lebih sejuk */
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: var(--background);
-            margin: 0;
-            height: 100vh;
-            display: grid;
-            place-content: center;
+            color: var(--body-text);
+            display: flex;
         }
 
-        /* Tombol Pemicu */
-        .btn-buka-materi {
-            background: var(--primary-orange);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 127, 50, 0.4);
-            transition: all 0.3s ease;
+        .dashboard-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
         }
 
-        .btn-buka-materi:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 127, 50, 0.5);
+        /* ======================== */
+        /* === 1. Sidebar Navigasi === */
+        /* ======================== */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-logo i {
+            font-size: 2rem;
+            color: var(--primary-orange);
+        }
+
+        .sidebar-logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            margin: 0.3rem 0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--gray-text);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu li a i {
+            font-size: 1.2rem;
+            width: 22px;
+            text-align: center;
         }
         
-        .btn-buka-materi i {
-            margin-right: 10px;
+        .sidebar-menu li a:hover {
+            background-color: #FFF2E8; /* Warna hover orange muda */
+            color: var(--primary-orange);
         }
 
-        /* Lapisan Overlay untuk Pop-up */
-        .materi-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+        .sidebar-menu li a.active {
+            background-color: var(--primary-orange);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 127, 50, 0.3);
+        }
+
+        .sidebar-logout {
+            margin-top: auto;
+        }
+
+        /* ======================== */
+        /* === 2. Konten Utama === */
+        /* ======================== */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000;
+            margin-bottom: 2rem;
+        }
+        
+        .header-title h2 {
+            font-size: 1.8rem;
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+        
+        .header-title p {
+            color: var(--gray-text);
         }
 
-        .materi-popup-overlay.show {
-            opacity: 1;
-            visibility: visible;
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .search-bar {
+            position: relative;
         }
 
-        /* Konten Pop-up */
-        .materi-popup-content {
-            background-color: white;
-            width: 90%;
-            max-width: 650px;
+        .search-bar input {
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            width: 250px;
+            transition: all 0.2s ease;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 127, 50, 0.2);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-text);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        /* ======================== */
+        /* === 3. Grid Dashboard === */
+        /* ======================== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            display: flex;
-            overflow: hidden;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         
-        .materi-popup-overlay.show .materi-popup-content {
-             transform: scale(1);
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
-
-        /* Kolom Kiri: Visual */
-        .popup-visual {
-            width: 200px;
-            background-color: var(--light-orange);
+        
+        /* Card Lanjutkan Belajar */
+        .continue-learning-card {
+            grid-column: 1 / -1; /* Mengambil seluruh lebar grid */
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 2rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            color: white;
         }
-
-        .popup-visual i {
-            font-size: 5rem;
-            color: var(--primary-orange);
+        
+        .continue-learning-card .icon-wrapper {
+            font-size: 3rem;
             opacity: 0.8;
         }
         
-        /* Kolom Kanan: Detail */
-        .popup-details {
-            padding: 2rem;
-            flex: 1;
-            position: relative;
+        .continue-learning-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .continue-learning-card p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
         }
         
-        .popup-tag {
-            background-color: var(--light-orange);
+        .btn-lanjutkan {
+            background-color: white;
             color: var(--primary-orange);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
             font-weight: 600;
-            display: inline-block;
-            margin-bottom: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .popup-details h3 {
-            font-size: 1.6rem;
-            color: var(--dark-text);
-            margin: 0 0 0.5rem 0;
-        }
-
-        .popup-details p {
-            font-size: 0.95rem;
-            color: var(--body-text);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .popup-keypoints h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--dark-text);
-            margin-bottom: 0.8rem;
-        }
-
-        .popup-keypoints ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 2rem 0;
-        }
-
-        .popup-keypoints li {
-            color: var(--gray-text);
-            margin-bottom: 0.6rem;
+        
+        /* Kartu Statistik */
+        .stat-card {
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
 
-        .popup-keypoints li i {
-            color: var(--success-green);
-            margin-right: 10px;
-        }
-        
-        .btn-mulai-belajar {
-            background: var(--dark-text);
-            color: white;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-        
-        .btn-mulai-belajar:hover {
-            background-color: #000;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #f0f0f0;
-            border: none;
-            width: 30px;
-            height: 30px;
+        .stat-card .icon {
+            font-size: 2rem;
+            padding: 1rem;
             border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            color: var(--gray-text);
-            transition: all 0.2s;
+            color: white;
+        }
+        .icon-completed { background-color: #4CAF50; }
+        .icon-certificate { background-color: #2196F3; }
+        .icon-time { background-color: #9C27B0; }
+        
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-text);
         }
         
-        .close-btn:hover {
-            background-color: #e0e0e0;
-            transform: rotate(90deg);
+        .stat-card .label {
+            color: var(--gray-text);
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .materi-popup-content {
-                flex-direction: column;
-                max-width: 350px;
+        /* Section Title */
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dark-text);
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            grid-column: 1 / -1;
+        }
+
+        /* Kartu Materi */
+        .course-card {
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .course-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .course-card-content {
+            padding: 1rem 1.5rem 1.5rem;
+        }
+        
+        .course-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+        .tkj-category { background-color: #E3F2FD; color: #1E88E5; }
+        .dkv-category { background-color: #FFF3E0; color: #FB8C00; }
+
+        .course-card h4 {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+        }
+
+        /* ======================== */
+        /* === 4. Responsive Design === */
+        /* ======================== */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100%;
+                z-index: 1000;
+                transform: translateX(-100%);
+                box-shadow: 10px 0 20px rgba(0,0,0,0.1);
             }
-            .popup-visual {
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
                 width: 100%;
-                height: 150px;
             }
-            .popup-details {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
                 padding: 1.5rem;
             }
-            .popup-details h3 {
-                font-size: 1.4rem;
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .header-actions {
+                width: 100%;
+            }
+            .search-bar {
+                flex-grow: 1;
+            }
+            .search-bar input {
+                width: 100%;
+            }
+            .continue-learning-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-
-    <button class="btn-buka-materi" id="open-popup-btn">
-        <i class="fas fa-book-open"></i>Lihat Info Materi
-    </button>
-    
-    <div class="materi-popup-overlay" id="materi-popup">
-        <div class="materi-popup-content">
-            <div class="popup-visual">
-                <i class="fas fa-server"></i>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>EduLMS</h1>
             </div>
-            
-            <div class="popup-details">
-                <button class="close-btn" id="close-popup-btn"><i class="fas fa-times"></i></button>
-                <span class="popup-tag">TKJ</span>
-                <h3>Instalasi Web Server</h3>
-                <p>
-                    Panduan ringkas untuk pemula dalam menginstal dan menjalankan web server pertama Anda.
-                </p>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> Materi Saya</a></li>
+                <li><a href="#"><i class="fas fa-tasks"></i> Tugas</a></li>
+                <li><a href="#"><i class="fas fa-certificate"></i> Sertifikat</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profil</a></li>
+            </ul>
+            <div class="sidebar-logout">
+                 <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                </ul>
+            </div>
+        </aside>
 
-                <div class="popup-keypoints">
-                    <h4>Apa yang akan dipelajari:</h4>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Prinsip dasar Web Server</li>
-                        <li><i class="fas fa-check-circle"></i> Instalasi Apache2 di Linux</li>
-                        <li><i class="fas fa-check-circle"></i> Pengujian & verifikasi instalasi</li>
-                    </ul>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                    <h2>Selamat Datang Kembali, Budi!</h2>
+                    <p>Mari lanjutkan progres belajarmu hari ini.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Cari Materi...">
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Foto Profil">
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="card continue-learning-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="content-wrapper">
+                        <h3>Lanjutkan Belajar</h3>
+                        <p>Konfigurasi DHCP Server - Prinsip Kerja DHCP (DORA)</p>
+                        <a href="#" class="btn-lanjutkan">
+                            Lanjutkan <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
                 
-                <a href="#" class="btn-mulai-belajar">Mulai Belajar Sekarang</a>
+                <div class="card stat-card">
+                    <div class="icon icon-completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="info">
+                        <span class="value">12</span>
+                        <span class="label">Materi Selesai</span>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="icon icon-certificate">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="info">
+                        <span class="value">3</span>
+                        <span class="label">Sertifikat</span>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="icon icon-time">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info">
+                        <span class="value">28</span>
+                        <span class="label">Jam Belajar</span>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Materi Saya</h3>
+
+                <div class="card course-card">
+                    <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=500" alt="Networking">
+                    <div class="course-card-content">
+                        <span class="course-category tkj-category">TKJ</span>
+                        <h4>Dasar Jaringan Komputer</h4>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" style="width: 75%;"></div>
+                        </div>
+                        <span class="progress-text">75% Selesai</span>
+                    </div>
+                </div>
+
+                <div class="card course-card">
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=500" alt="Design">
+                    <div class="course-card-content">
+                        <span class="course-category dkv-category">DKV</span>
+                        <h4>Teori Warna dalam Desain Grafis</h4>
+                         <div class="progress-bar">
+                            <div class="progress-bar-fill" style="width: 30%;"></div>
+                        </div>
+                        <span class="progress-text">30% Selesai</span>
+                    </div>
+                </div>
+
+                <div class="card course-card">
+                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500" alt="Web Server">
+                    <div class="course-card-content">
+                        <span class="course-category tkj-category">TKJ</span>
+                        <h4>Administrasi Web Server</h4>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" style="width: 100%;"></div>
+                        </div>
+                        <span class="progress-text">Selesai!</span>
+                    </div>
+                </div>
+
             </div>
-        </div>
+        </main>
     </div>
 
     <script>
-        const openBtn = document.getElementById('open-popup-btn');
-        const closeBtn = document.getElementById('close-popup-btn');
-        const popup = document.getElementById('materi-popup');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
 
-        // Fungsi untuk membuka pop-up
-        const openPopup = () => {
-            popup.classList.add('show');
-        };
-
-        // Fungsi untuk menutup pop-up
-        const closePopup = () => {
-            popup.classList.remove('show');
-        };
-
-        // Event listener
-        openBtn.addEventListener('click', openPopup);
-        closeBtn.addEventListener('click', closePopup);
-        
-        // Menutup pop-up saat mengklik area overlay
-        popup.addEventListener('click', (event) => {
-            if (event.target === popup) {
-                closePopup();
-            }
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
         });
 
+        // Optional: Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (event) => {
+            if (window.innerWidth <= 1024) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
+                if (!isClickInsideSidebar && !isClickOnMenuBtn && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        });
     </script>
-
 </body>
 </html>
