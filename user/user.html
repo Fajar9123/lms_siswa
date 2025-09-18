@@ -50,6 +50,8 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
         }
 
         .sidebar-logo {
@@ -73,6 +75,26 @@
         .sidebar-menu {
             list-style: none;
             flex-grow: 1;
+        }
+        
+        .sidebar-menu .submenu {
+            display: none;
+            list-style: none;
+            padding-left: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .sidebar-menu .has-submenu.open .submenu {
+            display: block;
+        }
+        
+        .sidebar-menu .has-submenu .sub-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-menu .has-submenu.open .sub-icon {
+            transform: rotate(180deg);
         }
 
         .sidebar-menu li a {
@@ -136,7 +158,7 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 1.5rem; /* Menambah jarak antar elemen */
+            gap: 1.5rem;
         }
         
         .search-bar {
@@ -149,6 +171,8 @@
             border-radius: 25px;
             width: 250px;
             transition: all 0.2s ease;
+            background-color: var(--card-bg);
+            color: var(--dark-text);
         }
         
         .search-bar input:focus {
@@ -176,7 +200,7 @@
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary-orange); /* Menambahkan border pada avatar */
+            border: 2px solid var(--primary-orange);
         }
         
         /* Mobile Menu Button */
@@ -218,7 +242,7 @@
             gap: 2rem;
             background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
             color: white;
-            padding: 2rem; /* Menambah padding */
+            padding: 2rem;
         }
         
         .continue-learning-card .icon-wrapper {
@@ -259,7 +283,7 @@
             align-items: center;
             gap: 1rem;
         }
-
+        
         .stat-card .icon {
             font-size: 2rem;
             padding: 1rem;
@@ -303,6 +327,7 @@
             width: 100%;
             height: 150px;
             object-fit: cover;
+            border-bottom: 3px solid var(--primary-orange);
         }
 
         .course-card-content {
@@ -347,6 +372,163 @@
             color: var(--gray-text);
         }
 
+        /* Gaya baru untuk Jadwal Pelajaran */
+        .schedule-slider-wrapper {
+            grid-column: 1 / -1;
+            position: relative;
+            overflow: hidden;
+            padding: 0 1.5rem; 
+        }
+        
+        .schedule-slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .schedule-slider-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+        
+        .slider-nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-btn {
+            background-color: var(--card-bg);
+            border: 1px solid #e0e0e0;
+            color: var(--gray-text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .slider-btn:hover {
+            background-color: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        .slider-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #f0f0f0;
+            color: #b0b0b0;
+        }
+
+        .schedule-slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            gap: 1.5rem;
+            padding-bottom: 1rem; 
+        }
+        
+        .schedule-day-card {
+            min-width: 100%;
+            flex-shrink: 0;
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .schedule-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .schedule-header i {
+            font-size: 1.5rem;
+            color: var(--primary-orange);
+        }
+
+        .schedule-header h4 {
+            font-size: 1.2rem;
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .schedule-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 1rem;
+            background-color: #F8F9FA;
+            border-left: 4px solid var(--primary-orange);
+            border-radius: 6px;
+        }
+
+        .schedule-item-time {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            font-weight: 500;
+        }
+
+        .schedule-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+        
+        .btn-masuk-kelas {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background-color 0.2s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-masuk-kelas:hover {
+            background-color: #e06d2d;
+        }
+        
+        /* Gaya Dot Indicator */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #bdbdbd;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .dot.active {
+            background-color: var(--primary-orange);
+            transform: scale(1.2);
+        }
+
         /* 4. Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
@@ -354,7 +536,7 @@
                 left: 0;
                 top: 0;
                 height: 100%;
-                z-index: 1000;
+                width: 260px;
                 transform: translateX(-100%);
                 box-shadow: 10px 0 20px rgba(0,0,0,0.1);
             }
@@ -363,6 +545,7 @@
             }
             .main-content {
                 width: 100%;
+                padding: 1.5rem;
             }
             .mobile-menu-btn {
                 display: block;
@@ -371,27 +554,15 @@
                 justify-content: flex-start;
             }
             .header-actions {
-                display: none; /* Menyembunyikan search dan profile di tablet */
+                display: none;
+            }
+            .schedule-slider-wrapper {
+                padding: 0;
+            }
+            .slider-nav-buttons {
+                display: none;
             }
         }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1.5rem;
-            }
-            .continue-learning-card {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-            .continue-learning-card .content-wrapper {
-                text-align: center;
-            }
-            .dashboard-header .header-title {
-                text-align: left;
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -402,24 +573,24 @@
                 <h1>EduLMS</h1>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-book"></i> Materi Saya</a></li>
-                <li><a href="#"><i class="fas fa-tasks"></i> Tugas</a></li>
-               <li class="has-submenu">
-        <a href="#" class="dropdown-toggle"><i class="fas fa-file-alt"></i> Ujian <i class="fas fa-chevron-down sub-icon"></i></a>
-        <ul class="submenu">
-            <li><a href="#"><i class="fas fa-pencil-alt"></i> Ujian Harian</a></li>
-            <li><a href="#"><i class="fas fa-file-signature"></i> Ujian Tengah Semester (UTS)</a></li>
-            <li><a href="#"><i class="fas fa-graduation-cap"></i> Ujian Akhir Semester (UAS)</a></li>
-        </ul>
-    </li>
-                <li><a href="#"><i class="fas fa-certificate"></i> Sertifikat</a></li>
-                <li><a href="#"><i class="fas fa-user"></i> Profil</a></li>
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-book-open"></i> Materi Saya</a></li>
+                <li><a href="#"><i class="fas fa-clipboard-list"></i> Tugas</a></li>
+                <li class="has-submenu">
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-file-alt"></i> Ujian <i class="fas fa-chevron-down sub-icon"></i></a>
+                    <ul class="submenu">
+                        <li><a href="#"><i class="fas fa-pencil-alt"></i> Ujian Harian</a></li>
+                        <li><a href="#"><i class="fas fa-file-signature"></i> Ujian Tengah Semester (UTS)</a></li>
+                        <li><a href="#"><i class="fas fa-graduation-cap"></i> Ujian Akhir Semester (UAS)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-award"></i> Sertifikat</a></li>
+                <li><a href="#"><i class="fas fa-user-circle"></i> Profil</a></li>
             </ul>
             <div class="sidebar-logout">
-                 <ul class="sidebar-menu">
-                     <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
-                 </ul>
+                <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                </ul>
             </div>
         </aside>
 
@@ -484,6 +655,142 @@
                         <span class="label">Jam Belajar</span>
                     </div>
                 </div>
+                
+                <h3 class="section-title">Jadwal Pelajaran Mingguan</h3>
+
+                <div class="schedule-slider-wrapper">
+                    <div class="schedule-slider-header">
+                        <div class="slider-nav-buttons">
+                            <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="schedule-slider-track" id="sliderTrack">
+                        <div class="schedule-day-card">
+                            <div class="schedule-header">
+                                <i class="fas fa-calendar-day"></i>
+                                <h4>Senin</h4>
+                            </div>
+                            <ul class="schedule-list">
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">10:00 - 11:30 AM</div>
+                                    <div class="schedule-item-title">Dasar Jaringan Komputer</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">13:00 - 14:30 PM</div>
+                                    <div class="schedule-item-title">Teori Warna</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">15:00 - 16:30 PM</div>
+                                    <div class="schedule-item-title">Matematika</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="schedule-day-card">
+                            <div class="schedule-header">
+                                <i class="fas fa-calendar-day"></i>
+                                <h4>Selasa</h4>
+                            </div>
+                            <ul class="schedule-list">
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">08:00 - 09:30 AM</div>
+                                    <div class="schedule-item-title">Administrasi Web Server</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">11:00 - 12:30 PM</div>
+                                    <div class="schedule-item-title">Manajemen Basis Data</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="schedule-day-card">
+                            <div class="schedule-header">
+                                <i class="fas fa-calendar-day"></i>
+                                <h4>Rabu</h4>
+                            </div>
+                            <ul class="schedule-list">
+                                 <li class="schedule-item">
+                                    <div class="schedule-item-time">09:00 - 10:30 AM</div>
+                                    <div class="schedule-item-title">Pemrograman Dasar</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">13:00 - 14:30 PM</div>
+                                    <div class="schedule-item-title">Fisika</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                                <li class="schedule-item">
+                                    <div class="schedule-item-time">15:00 - 16:30 PM</div>
+                                    <div class="schedule-item-title">Bahasa Indonesia</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="schedule-day-card">
+                            <div class="schedule-header">
+                                <i class="fas fa-calendar-day"></i>
+                                <h4>Kamis</h4>
+                            </div>
+                            <ul class="schedule-list">
+                                 <li class="schedule-item">
+                                    <div class="schedule-item-time">10:00 - 11:30 AM</div>
+                                    <div class="schedule-item-title">Desain UI/UX</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                                 <li class="schedule-item">
+                                    <div class="schedule-item-time">13:00 - 14:30 PM</div>
+                                    <div class="schedule-item-title">Kimia</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="schedule-day-card">
+                            <div class="schedule-header">
+                                <i class="fas fa-calendar-day"></i>
+                                <h4>Jumat</h4>
+                            </div>
+                            <ul class="schedule-list">
+                                 <li class="schedule-item">
+                                    <div class="schedule-item-time">08:00 - 09:30 AM</div>
+                                    <div class="schedule-item-title">Teknik Komunikasi</div>
+                                    <a href="#" class="btn-masuk-kelas">
+                                        Masuk Kelas <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
 
                 <h3 class="section-title">Materi Saya</h3>
 
@@ -504,7 +811,7 @@
                     <div class="course-card-content">
                         <span class="course-category dkv-category">DKV</span>
                         <h4>Teori Warna dalam Desain Grafis</h4>
-                         <div class="progress-bar">
+                        <div class="progress-bar">
                             <div class="progress-bar-fill" style="width: 30%;"></div>
                         </div>
                         <span class="progress-text">30% Selesai</span>
@@ -543,6 +850,119 @@
                 }
             }
         });
+        
+        // Logic for dropdown menu
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        if (dropdownToggle) {
+            dropdownToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parentLi = dropdownToggle.parentElement;
+                parentLi.classList.toggle('open');
+            });
+        }
+        
+        // --- Logic Slider Jadwal ---
+        const sliderTrack = document.getElementById('sliderTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('sliderDots');
+        const cards = document.querySelectorAll('.schedule-day-card');
+        let currentIndex = 0;
+        let startX = 0;
+        let isDragging = false;
+
+        // Buat dot indicator
+        cards.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            dot.dataset.index = index;
+            dotsContainer.appendChild(dot);
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+            });
+        });
+
+        function updateSlider() {
+            const cardWidth = cards[0].offsetWidth + 24; // Card width + gap (1.5rem * 16px)
+            sliderTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+            
+            // Atur status tombol
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === cards.length - 1;
+
+            // Atur status dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+        
+        // Navigasi tombol
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+
+        // Swipe
+        sliderTrack.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            sliderTrack.style.cursor = 'grabbing';
+        });
+
+        sliderTrack.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+        });
+
+        sliderTrack.addEventListener('mouseup', (e) => {
+            isDragging = false;
+            const endX = e.clientX;
+            const diffX = startX - endX;
+            sliderTrack.style.cursor = 'grab';
+
+            if (Math.abs(diffX) > 50) { // Toleransi geser 50px
+                if (diffX > 0 && currentIndex < cards.length - 1) {
+                    currentIndex++;
+                } else if (diffX < 0 && currentIndex > 0) {
+                    currentIndex--;
+                }
+            }
+            updateSlider();
+        });
+
+        // Touch swipe untuk mobile
+        sliderTrack.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+        });
+
+        sliderTrack.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+
+            if (Math.abs(diffX) > 50) { // Toleransi geser 50px
+                if (diffX > 0 && currentIndex < cards.length - 1) {
+                    currentIndex++;
+                } else if (diffX < 0 && currentIndex > 0) {
+                    currentIndex--;
+                }
+            }
+            updateSlider();
+        });
+        
+        updateSlider(); // Panggil saat halaman pertama kali dimuat
     </script>
 </body>
 </html>
