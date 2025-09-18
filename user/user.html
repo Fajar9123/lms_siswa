@@ -15,13 +15,14 @@
             --dark-text: #212121;
             --body-text: #424242;
             --gray-text: #757575;
-            --background: #F4F7FE; /* Warna latar belakang yang lebih sejuk */
+            --background: #F4F7FE;
             --sidebar-bg: #FFFFFF;
             --card-bg: #FFFFFF;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
             --border-radius: 12px;
         }
 
+        /* Reset dan Base Styling */
         * {
             margin: 0;
             padding: 0;
@@ -41,9 +42,7 @@
             min-height: 100vh;
         }
 
-        /* ======================== */
-        /* === 1. Sidebar Navigasi === */
-        /* ======================== */
+        /* 1. Sidebar Navigasi */
         .sidebar {
             width: 260px;
             background-color: var(--sidebar-bg);
@@ -96,7 +95,7 @@
         }
         
         .sidebar-menu li a:hover {
-            background-color: #FFF2E8; /* Warna hover orange muda */
+            background-color: #FFF2E8;
             color: var(--primary-orange);
         }
 
@@ -110,9 +109,7 @@
             margin-top: auto;
         }
 
-        /* ======================== */
-        /* === 2. Konten Utama === */
-        /* ======================== */
+        /* 2. Konten Utama */
         .main-content {
             flex: 1;
             padding: 2rem;
@@ -139,7 +136,7 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem; /* Menambah jarak antar elemen */
         }
         
         .search-bar {
@@ -179,8 +176,9 @@
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid var(--primary-orange); /* Menambahkan border pada avatar */
         }
-
+        
         /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
@@ -188,11 +186,11 @@
             cursor: pointer;
             background: none;
             border: none;
+            margin-right: 1rem;
+            color: var(--dark-text);
         }
         
-        /* ======================== */
-        /* === 3. Grid Dashboard === */
-        /* ======================== */
+        /* 3. Grid Dashboard */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -214,12 +212,13 @@
         
         /* Card Lanjutkan Belajar */
         .continue-learning-card {
-            grid-column: 1 / -1; /* Mengambil seluruh lebar grid */
+            grid-column: 1 / -1;
             display: flex;
             align-items: center;
             gap: 2rem;
             background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
             color: white;
+            padding: 2rem; /* Menambah padding */
         }
         
         .continue-learning-card .icon-wrapper {
@@ -247,6 +246,11 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-lanjutkan:hover {
+            background-color: #f0f0f0;
         }
         
         /* Kartu Statistik */
@@ -261,6 +265,9 @@
             padding: 1rem;
             border-radius: 50%;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .icon-completed { background-color: #4CAF50; }
         .icon-certificate { background-color: #2196F3; }
@@ -332,6 +339,7 @@
             height: 100%;
             background-color: var(--primary-orange);
             border-radius: 4px;
+            transition: width 0.5s ease-in-out;
         }
 
         .progress-text {
@@ -339,9 +347,7 @@
             color: var(--gray-text);
         }
 
-        /* ======================== */
-        /* === 4. Responsive Design === */
-        /* ======================== */
+        /* 4. Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 position: fixed;
@@ -361,32 +367,31 @@
             .mobile-menu-btn {
                 display: block;
             }
+            .dashboard-header {
+                justify-content: flex-start;
+            }
+            .header-actions {
+                display: none; /* Menyembunyikan search dan profile di tablet */
+            }
         }
         
         @media (max-width: 768px) {
             .main-content {
                 padding: 1.5rem;
             }
-            .dashboard-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            .header-actions {
-                width: 100%;
-            }
-            .search-bar {
-                flex-grow: 1;
-            }
-            .search-bar input {
-                width: 100%;
-            }
             .continue-learning-card {
                 flex-direction: column;
                 text-align: center;
                 gap: 1rem;
             }
+            .continue-learning-card .content-wrapper {
+                text-align: center;
+            }
+            .dashboard-header .header-title {
+                text-align: left;
+            }
         }
+
     </style>
 </head>
 <body>
@@ -400,13 +405,21 @@
                 <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="#"><i class="fas fa-book"></i> Materi Saya</a></li>
                 <li><a href="#"><i class="fas fa-tasks"></i> Tugas</a></li>
+               <li class="has-submenu">
+        <a href="#" class="dropdown-toggle"><i class="fas fa-file-alt"></i> Ujian <i class="fas fa-chevron-down sub-icon"></i></a>
+        <ul class="submenu">
+            <li><a href="#"><i class="fas fa-pencil-alt"></i> Ujian Harian</a></li>
+            <li><a href="#"><i class="fas fa-file-signature"></i> Ujian Tengah Semester (UTS)</a></li>
+            <li><a href="#"><i class="fas fa-graduation-cap"></i> Ujian Akhir Semester (UAS)</a></li>
+        </ul>
+    </li>
                 <li><a href="#"><i class="fas fa-certificate"></i> Sertifikat</a></li>
                 <li><a href="#"><i class="fas fa-user"></i> Profil</a></li>
             </ul>
             <div class="sidebar-logout">
                  <ul class="sidebar-menu">
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
-                </ul>
+                     <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                 </ul>
             </div>
         </aside>
 
@@ -509,7 +522,6 @@
                         <span class="progress-text">Selesai!</span>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
@@ -522,7 +534,6 @@
             sidebar.classList.toggle('show');
         });
 
-        // Optional: Close sidebar when clicking outside on mobile
         document.addEventListener('click', (event) => {
             if (window.innerWidth <= 1024) {
                 const isClickInsideSidebar = sidebar.contains(event.target);

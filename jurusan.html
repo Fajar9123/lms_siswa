@@ -947,7 +947,7 @@
 
         <section class="hero" id="beranda">
             <div class="hero-content">
-                <h2>Selamat Datang di Portal Pembelajaran</h2>
+                <h2>Selamat Datang di EduLMS</h2>
                 <p>Temukan materi pelajaran untuk menunjang keahlian Anda.</p>
                 <div class="search-bar">
                     <input type="text" placeholder="Cari Materi Pelajaran...">
@@ -964,25 +964,25 @@
                     <p>Pilih program keahlian yang sesuai dengan minat dan bakat Anda untuk meraih masa depan yang gemilang.</p>
                 </div>
                 <div class="program-cards">
-                    <a href="#" class="jurusan-card">
+                    <a href="jurusan/akuntansi.html" class="jurusan-card">
                         <img src="img/siwa_akuntansi.png" alt="Akuntansi" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Akuntansi Keuangan dan Lembaga Bisnis</h3>
                         </div>
                     </a>
-                    <a href="#" class="jurusan-card">
+                    <a href="jurusan/perkantoran.html" class="jurusan-card">
                         <img src="img/siswa_manajemen.png" alt="Perkantoran" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Manajemen Perkantoran dan Layanan Bisnis</h3>
                         </div>
                     </a>
-                    <a href="#" class="jurusan-card">
+                    <a href="jurusan/bisnis_ritel.html" class="jurusan-card">
                         <img src="img/siswa_pemasaran.png" alt="Pemasaran" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Bisnis Ritail </h3>
                         </div>
                     </a>
-                    <a href="#" class="jurusan-card">
+                    <a href="jurusan/bisnis_digital.html" class="jurusan-card">
                         <img src="img/siswa-bisnisdg.png" alt="TKJ" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Bisnis Digital </h3>
@@ -994,7 +994,7 @@
                             <h3>Teknik Komputer dan Jaringan </h3>
                         </div>
                     </a>
-                     <a href="#" class="jurusan-card">
+                     <a href="jurusan/dkv.html" class="jurusan-card">
                         <img src="img/siswi-dkv.png" alt="DKV" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Desain Komunikasi Visual</h3>
@@ -1083,5 +1083,86 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenuDrawer = document.getElementById('mobile-menu');
+            const closeMenuBtn = mobileMenuDrawer.querySelector('.close-btn');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuDrawer.classList.add('is-active');
+            });
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenuDrawer.classList.remove('is-active');
+            });
+             mobileMenuDrawer.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuDrawer.classList.remove('is-active');
+                });
+            });
+
+            // Modal Logic
+            const loginModal = document.getElementById('login-modal');
+            const registerModal = document.getElementById('register-modal');
+            const loginBtns = [document.getElementById('login-btn'), document.getElementById('mobile-login-btn')];
+            const registerBtns = [document.getElementById('register-btn'), document.getElementById('mobile-register-btn')];
+            const closeBtns = document.querySelectorAll('.modal .close-btn');
+            const showRegisterLink = document.getElementById('show-register');
+            const showLoginLink = document.getElementById('show-login');
+
+            const openModal = (modal) => modal.classList.add('show');
+            const closeModal = (modal) => modal.classList.remove('show');
+
+            loginBtns.forEach(btn => btn.addEventListener('click', () => openModal(loginModal)));
+            registerBtns.forEach(btn => btn.addEventListener('click', () => openModal(registerModal)));
+            closeBtns.forEach(btn => btn.addEventListener('click', () => {
+                closeModal(loginModal);
+                closeModal(registerModal);
+            }));
+            
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal(loginModal);
+                openModal(registerModal);
+            });
+            
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal(registerModal);
+                openModal(loginModal);
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) closeModal(loginModal);
+                if (e.target === registerModal) closeModal(registerModal);
+            });
+            
+            // Course Filter Logic
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const courseCards = document.querySelectorAll('.course-card');
+
+            // Show all cards initially
+            courseCards.forEach(card => card.classList.add('show'));
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.getAttribute('data-filter');
+                    
+                    // Show/hide cards based on filter
+                    courseCards.forEach(card => {
+                        card.classList.remove('show');
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.classList.add('show');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
