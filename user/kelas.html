@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi Saya - EduLMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #FF7F32;
+            --secondary-orange: #FF9B50;
+            --dark-text: #212121;
+            --body-text: #424242;
+            --gray-text: #757575;
+            --background: #F4F7FE;
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            --border-radius: 12px;
+        }
+
+        /* Reset dan Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--body-text);
+            display: flex;
+        }
+
+        .dashboard-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* 1. Sidebar Navigasi */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-logo i {
+            font-size: 2rem;
+            color: var(--primary-orange);
+        }
+
+        .sidebar-logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .sidebar-menu .submenu {
+            list-style: none;
+            padding-left: 2.5rem; 
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .sidebar-menu .has-submenu.active .submenu {
+            max-height: 500px;
+        }
+
+        .sidebar-menu .sub-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-menu .has-submenu.active .sub-icon {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            margin: 0.3rem 0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--gray-text);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu li a i {
+            font-size: 1.2rem;
+            width: 22px;
+            text-align: center;
+        }
+        
+        .sidebar-menu li a:hover {
+            background-color: #FFF2E8;
+            color: var(--primary-orange);
+        }
+
+        .sidebar-menu li a.active {
+            background-color: var(--primary-orange);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 127, 50, 0.3);
+        }
+
+        .sidebar-logout {
+            margin-top: auto;
+        }
+
+        /* 2. Konten Utama */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header-title h2 {
+            font-size: 1.8rem;
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+        
+        .header-title p {
+            color: var(--gray-text);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            width: 250px;
+            transition: all 0.2s ease;
+            background-color: var(--card-bg);
+            color: var(--dark-text);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 127, 50, 0.2);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-text);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-orange);
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            margin-right: 1rem;
+            color: var(--dark-text);
+        }
+        
+        /* 3. Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-nav-item {
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            color: var(--gray-text);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .tab-nav-item.active {
+            color: var(--primary-orange);
+            border-bottom: 2px solid var(--primary-orange);
+            margin-bottom: -2px;
+        }
+
+        /* 4. Tab Content */
+        .tab-content {
+            display: none;
+            padding-top: 1rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Style untuk Konten Materi */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .course-card-content {
+            padding: 1.5rem;
+        }
+
+        .course-card-content h4 {
+            font-size: 1.2rem;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-card-content p {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            margin-bottom: 1rem;
+        }
+
+        .course-card-content a {
+            display: inline-block;
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        
+        .course-card-content a:hover {
+            background-color: #e06d2d;
+        }
+
+        /* Style untuk Konten Tugas */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .task-item {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: flex-start; /* Ubah ke flex-start */
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .task-item-info {
+            flex-basis: 100%; /* Buat info mengambil lebar penuh */
+            margin-bottom: 1rem;
+        }
+        
+        .task-item-info h4 {
+            font-size: 1.2rem;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-item-info p {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+        }
+        
+        .task-deadline {
+            font-weight: 600;
+            color: #D32F2F; /* Merah untuk deadline */
+        }
+
+        .task-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .status-completed { background-color: #E8F5E9; color: #388E3C; }
+        .status-due { background-color: #FFF3E0; color: #F57C00; }
+        .status-overdue { background-color: #FFCDD2; color: #D32F2F; }
+
+        .task-actions a {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        
+        .task-actions a:hover {
+            background-color: #e06d2d;
+        }
+
+        /* === [BARU] Style untuk Upload Tugas === */
+        .upload-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .upload-box {
+            width: 100%;
+            border: 2px dashed #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: #fdfdfd;
+        }
+
+        .upload-box:hover {
+            border-color: var(--primary-orange);
+            background-color: #FFF7F2;
+        }
+
+        .upload-box i {
+            font-size: 2.5rem;
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+
+        .upload-box p {
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .upload-box span {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+            margin-top: 0.25rem;
+        }
+
+        .file-name-display {
+            margin-top: 1rem;
+            font-style: italic;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            min-height: 1.2em; /* agar tidak ada lompatan layout */
+        }
+
+        .btn-kirim {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-kirim:hover {
+            background-color: #e06d2d;
+            box-shadow: 0 5px 15px rgba(255, 127, 50, 0.3);
+        }
+        /* === Akhir Style Upload === */
+
+        /* === [MODIFIKASI] Style untuk Konten Absensi === */
+        .attendance-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .attendance-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .summary-item {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-left: 5px solid;
+        }
+        .summary-item .count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .summary-item .label {
+            font-size: 1rem;
+            color: var(--gray-text);
+            font-weight: 500;
+        }
+        .summary-present { border-color: #4CAF50; }
+        .summary-present .count { color: #4CAF50; }
+        .summary-permission { border-color: #2196F3; }
+        .summary-permission .count { color: #2196F3; }
+        .summary-sick { border-color: #FFC107; }
+        .summary-sick .count { color: #FFC107; }
+        .summary-absent { border-color: #F44336; }
+        .summary-absent .count { color: #F44336; }
+
+        .daily-attendance-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .daily-attendance-card h4 {
+            font-size: 1.5rem;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .daily-attendance-card .date-info {
+            font-size: 1rem;
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .attendance-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .attendance-status i { font-size: 1.5rem; }
+        .status-present { color: #388E3C; }
+        .status-absent { color: #D32F2F; }
+
+        .btn-absen {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-absen:hover {
+            background-color: #e06d2d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 127, 50, 0.3);
+        }
+        .btn-absen.disabled {
+            background-color: #BDBDBD;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .btn-absen.success {
+            background-color: #4CAF50;
+        }
+
+        .attendance-history {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        .attendance-history h4 {
+            font-size: 1.3rem;
+            color: var(--dark-text);
+            margin-bottom: 1.5rem;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .history-table th, .history-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .history-table th {
+            color: var(--gray-text);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .history-table td {
+            color: var(--body-text);
+            font-weight: 500;
+        }
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+        }
+        .badge-hadir { background-color: #E8F5E9; color: #388E3C; }
+        .badge-sakit { background-color: #FFF8E1; color: #FFA000; }
+        .badge-izin { background-color: #E3F2FD; color: #1976D2; }
+        .badge-alpa { background-color: #FFCDD2; color: #D32F2F; }
+        /* === Akhir Modifikasi Absensi === */
+
+        /* 5. Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 260px;
+                transform: translateX(-100%);
+                box-shadow: 10px 0 20px rgba(0,0,0,0.1);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .dashboard-header {
+                justify-content: flex-start;
+            }
+            .header-actions {
+                display: none;
+            }
+            .tab-nav {
+                justify-content: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .task-item-info {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>EduLMS</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="user.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-book-open"></i> Materi Saya</a></li>
+                <li><a href="kelas.html" class="active"><i class="fas fa-users"></i> Kelas</a></li>
+                <li class="has-submenu">
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-file-alt"></i> Ujian <i class="fas fa-chevron-down sub-icon"></i></a>
+                    <ul class="submenu">
+                        <li><a href="#"><i class="fas fa-pencil-alt"></i> Ujian Harian</a></li>
+                        <li><a href="#"><i class="fas fa-file-signature"></i> Ujian Tengah Semester (UTS)</a></li>
+                        <li><a href="#"><i class="fas fa-graduation-cap"></i> Ujian Akhir Semester (UAS)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-award"></i> Sertifikat</a></li>
+                <li><a href="#"><i class="fas fa-user-circle"></i> Profil</a></li>
+            </ul>
+            <div class="sidebar-logout">
+                <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-title">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                    <h2>Materi Saya</h2>
+                    <p>Daftar semua materi, tugas, dan absensi Anda.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Cari Materi...">
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Foto Profil">
+                    </div>
+                </div>
+            </header>
+
+            <div class="tab-nav">
+                <div class="tab-nav-item" data-tab="materi">Materi</div>
+                <div class="tab-nav-item" data-tab="tugas">Tugas</div>
+                <div class="tab-nav-item active" data-tab="absensi">Absensi</div>
+            </div>
+
+            <div id="materi" class="tab-content">
+                <div class="card-grid">
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=500" alt="Networking">
+                        <div class="course-card-content">
+                            <h4>Dasar Jaringan Komputer</h4>
+                            <p>Materi dasar untuk memahami konsep jaringan, topologi, dan protokol.</p>
+                            <a href="#">Lihat Materi</a>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=500" alt="Design">
+                        <div class="course-card-content">
+                            <h4>Teori Warna Desain Grafis</h4>
+                            <p>Pelajari cara penggunaan warna yang efektif untuk menciptakan desain menarik.</p>
+                            <a href="#">Lihat Materi</a>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500" alt="Web Server">
+                        <div class="course-card-content">
+                            <h4>Administrasi Web Server</h4>
+                            <p>Panduan lengkap instalasi, konfigurasi, dan pengelolaan web server.</p>
+                            <a href="#">Lihat Materi</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tugas" class="tab-content">
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-item-info">
+                            <h4>Tugas Analisis Topologi Jaringan</h4>
+                            <p>Mata Pelajaran: Dasar Jaringan Komputer</p>
+                            <p class="task-deadline">Deadline: 25 Oktober 2025</p>
+                        </div>
+                        
+                        <div class="upload-container">
+                            <span class="task-status status-due" style="margin-bottom: 1rem;">Belum Selesai</span>
+                            
+                            <label for="file-upload-1" class="upload-box">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Klik atau Seret File ke Area Ini</p>
+                                <span>File (PDF, DOCX, JPG, PNG) maks 10MB</span>
+                            </label>
+                            <input type="file" id="file-upload-1" hidden>
+                            
+                            <p id="file-name-1" class="file-name-display"></p>
+
+                            <button class="btn-kirim">Kirim Tugas</button>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-item-info">
+                            <h4>Uji Pemahaman Administrasi Server</h4>
+                            <p>Mata Pelajaran: Administrasi Web Server</p>
+                            <p class="task-deadline">Deadline: 15 Oktober 2025</p>
+                        </div>
+                        <div class="task-actions" style="width:100%; text-align:right;">
+                            <span class="task-status status-completed">Selesai</span>
+                        </div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-item-info">
+                            <h4>Proyek Akhir Desain Poster</h4>
+                            <p>Mata Pelajaran: Teori Warna Desain Grafis</p>
+                            <p class="task-deadline">Deadline: 1 November 2025</p>
+                        </div>
+                        <div class="task-actions" style="width:100%; text-align:right;">
+                            <span class="task-status status-due">Belum Selesai</span>
+                            <a href="#">Kerjakan Tugas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="absensi" class="tab-content active">
+                <div class="attendance-container">
+                    <div class="attendance-summary">
+                        <div class="summary-item summary-present">
+                            <div class="count" id="count-present">12</div>
+                            <div class="label">Hadir</div>
+                        </div>
+                        <div class="summary-item summary-permission">
+                            <div class="count" id="count-permission">1</div>
+                            <div class="label">Izin</div>
+                        </div>
+                        <div class="summary-item summary-sick">
+                            <div class="count" id="count-sick">0</div>
+                            <div class="label">Sakit</div>
+                        </div>
+                        <div class="summary-item summary-absent">
+                            <div class="count" id="count-absent">2</div>
+                            <div class="label">Alpa</div>
+                        </div>
+                    </div>
+            
+                    <div class="daily-attendance-card">
+                        <h4>Absensi Hari Ini</h4>
+                        <p class="date-info" id="current-date">Kamis, 18 September 2025</p>
+                        <p class="attendance-status status-absent" id="daily-status">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Anda Belum Melakukan Absensi.</span>
+                        </p>
+                        <button class="btn-absen" id="btn-absen-sekarang">
+                            <i class="fas fa-fingerprint"></i>
+                            <span>Absen Sekarang</span>
+                        </button>
+                    </div>
+            
+                    <div class="attendance-history">
+                        <h4>Riwayat Absensi Terakhir</h4>
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Mata Pelajaran</th>
+                                    <th>Status</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>17 Sep 2025</td>
+                                    <td>Dasar Jaringan Komputer</td>
+                                    <td><span class="status-badge badge-hadir">Hadir</span></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>16 Sep 2025</td>
+                                    <td>Teori Warna Desain Grafis</td>
+                                    <td><span class="status-badge badge-hadir">Hadir</span></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>15 Sep 2025</td>
+                                    <td>Administrasi Web Server</td>
+                                    <td><span class="status-badge badge-alpa">Alpa</span></td>
+                                    <td>Tanpa Keterangan</td>
+                                </tr>
+                                <tr>
+                                    <td>12 Sep 2025</td>
+                                    <td>Dasar Jaringan Komputer</td>
+                                    <td><span class="status-badge badge-izin">Izin</span></td>
+                                    <td>Acara Keluarga</td>
+                                </tr>
+                                 <tr>
+                                    <td>11 Sep 2025</td>
+                                    <td>Teori Warna Desain Grafis</td>
+                                    <td><span class="status-badge badge-hadir">Hadir</span></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </main>
+    </div>
+
+    <script>
+        // Logika untuk menu dropdown sidebar
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parentLi = toggle.closest('li');
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    if (item !== parentLi && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    }
+                });
+                parentLi.classList.toggle('active');
+            });
+        });
+
+        // Logika untuk navigasi tab
+        const tabNavItems = document.querySelectorAll('.tab-nav-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Hapus kelas 'active' dari semua tab nav dan konten
+                tabNavItems.forEach(nav => nav.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Tambahkan kelas 'active' pada tab dan konten yang diklik
+                const tabId = item.getAttribute('data-tab');
+                item.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Logika untuk tombol mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (window.innerWidth <= 1024) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
+                if (!isClickInsideSidebar && !isClickOnMenuBtn && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        });
+
+        // === [BARU] Logika untuk menampilkan nama file yang di-upload ===
+        const fileInput1 = document.getElementById('file-upload-1');
+        const fileNameDisplay1 = document.getElementById('file-name-1');
+
+        if (fileInput1) {
+            fileInput1.addEventListener('change', () => {
+                if (fileInput1.files.length > 0) {
+                    // Jika ada file yang dipilih, tampilkan namanya
+                    fileNameDisplay1.textContent = 'File yang dipilih: ' + fileInput1.files[0].name;
+                } else {
+                    // Jika tidak ada file, kosongkan teks
+                    fileNameDisplay1.textContent = '';
+                }
+            });
+        }
+        
+        // === [MODIFIKASI] Logika untuk Absensi ===
+        const btnAbsen = document.getElementById('btn-absen-sekarang');
+        const dailyStatus = document.getElementById('daily-status');
+        const currentDateEl = document.getElementById('current-date');
+        const countPresentEl = document.getElementById('count-present');
+
+        if (btnAbsen) {
+            // Set tanggal hari ini secara dinamis
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            currentDateEl.textContent = today.toLocaleDateString('id-ID', options);
+            
+            btnAbsen.addEventListener('click', () => {
+                // Cek jika tombol belum di-disable
+                if (!btnAbsen.classList.contains('disabled')) {
+                    // Update status
+                    dailyStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>Anda Telah Berhasil Absen Hari Ini.</span>';
+                    dailyStatus.classList.remove('status-absent');
+                    dailyStatus.classList.add('status-present');
+
+                    // Update & disable tombol
+                    btnAbsen.innerHTML = '<i class="fas fa-check"></i> <span>Sudah Absen</span>';
+                    btnAbsen.classList.add('disabled', 'success');
+                    
+                    // Update Ringkasan (Contoh)
+                    let currentPresentCount = parseInt(countPresentEl.textContent);
+                    countPresentEl.textContent = currentPresentCount + 1;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
