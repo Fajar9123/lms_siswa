@@ -204,14 +204,12 @@
             border: 2px solid var(--primary-orange);
         }
         
-        /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
             background: none;
             border: none;
-            margin-right: 1rem;
             color: var(--dark-text);
         }
         
@@ -230,6 +228,7 @@
             cursor: pointer;
             position: relative;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .tab-nav-item.active {
@@ -248,7 +247,6 @@
             display: block;
         }
         
-        /* Style untuk Konten Materi */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -304,7 +302,6 @@
             background-color: #e06d2d;
         }
 
-        /* Style untuk Konten Tugas */
         .task-list {
             display: flex;
             flex-direction: column;
@@ -317,14 +314,14 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             display: flex;
-            align-items: flex-start; /* Ubah ke flex-start */
+            align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .task-item-info {
-            flex-basis: 100%; /* Buat info mengambil lebar penuh */
-            margin-bottom: 1rem;
+           flex: 1 1 300px;
         }
         
         .task-item-info h4 {
@@ -340,7 +337,7 @@
         
         .task-deadline {
             font-weight: 600;
-            color: #D32F2F; /* Merah untuk deadline */
+            color: #D32F2F;
         }
 
         .task-status {
@@ -353,6 +350,10 @@
         .status-completed { background-color: #E8F5E9; color: #388E3C; }
         .status-due { background-color: #FFF3E0; color: #F57C00; }
         .status-overdue { background-color: #FFCDD2; color: #D32F2F; }
+
+        .task-actions {
+            flex-shrink: 0;
+        }
 
         .task-actions a {
             background-color: var(--primary-orange);
@@ -368,7 +369,6 @@
             background-color: #e06d2d;
         }
 
-        /* === [BARU] Style untuk Upload Tugas === */
         .upload-container {
             width: 100%;
             display: flex;
@@ -420,7 +420,7 @@
             font-style: italic;
             color: var(--gray-text);
             font-size: 0.9rem;
-            min-height: 1.2em; /* agar tidak ada lompatan layout */
+            min-height: 1.2em;
         }
 
         .btn-kirim {
@@ -440,9 +440,7 @@
             background-color: #e06d2d;
             box-shadow: 0 5px 15px rgba(255, 127, 50, 0.3);
         }
-        /* === Akhir Style Upload === */
 
-        /* === [MODIFIKASI] Style untuk Konten Absensi === */
         .attendance-container {
             display: flex;
             flex-direction: column;
@@ -549,6 +547,7 @@
             padding: 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+            overflow-x: auto; /* Tambahkan scroll horizontal jika tabel masih terlalu lebar */
         }
         .attendance-history h4 {
             font-size: 1.3rem;
@@ -586,8 +585,7 @@
         .badge-sakit { background-color: #FFF8E1; color: #FFA000; }
         .badge-izin { background-color: #E3F2FD; color: #1976D2; }
         .badge-alpa { background-color: #FFCDD2; color: #D32F2F; }
-        /* === Akhir Modifikasi Absensi === */
-
+        
         /* 5. Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
@@ -595,7 +593,6 @@
                 left: 0;
                 top: 0;
                 height: 100%;
-                width: 260px;
                 transform: translateX(-100%);
                 box-shadow: 10px 0 20px rgba(0,0,0,0.1);
             }
@@ -610,23 +607,133 @@
                 display: block;
             }
             .dashboard-header {
-                justify-content: flex-start;
+                /* [MODIFIKASI] Header lebih fleksibel */
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .header-title {
+                /* [MODIFIKASI] Pastikan title dan hamburger menu sejajar */
+                display: flex;
+                align-items: center;
+                gap: 1rem;
             }
             .header-actions {
+                /* [MODIFIKASI] Sembunyikan search bar, tapi tetap tampilkan profil */
+                gap: 1rem;
+                margin-left: auto;
+            }
+            .search-bar {
                 display: none;
             }
             .tab-nav {
-                justify-content: center;
+                /* [MODIFIKASI] Agar tab bisa di-scroll horizontal jika tidak muat */
+                justify-content: flex-start;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tab-nav::-webkit-scrollbar {
+                display: none; /* Sembunyikan scrollbar di Chrome/Safari */
             }
         }
+        
         @media (max-width: 768px) {
+            .header-title h2 {
+                font-size: 1.5rem;
+            }
             .task-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
             }
-            .task-item-info {
-                margin-right: 0;
+            
+            /* [MODIFIKASI] Buat tombol dan area upload menjadi full-width */
+            .task-actions, .upload-container {
+                width: 100%;
+                text-align: left !important;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .task-actions a {
+                width: 100%;
+                text-align: center;
+            }
+            .task-actions .task-status {
+                margin-bottom: 0.5rem;
+            }
+            
+            /* [BARU] Mengubah tabel riwayat absensi menjadi format kartu di mobile */
+            .attendance-history {
+                overflow-x: hidden; /* Matikan scroll karena layout sudah diubah */
+                padding: 1.5rem;
+            }
+            .history-table thead {
+                display: none; /* Sembunyikan header tabel */
+            }
+            .history-table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border-radius: var(--border-radius);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+                border: 1px solid #f0f0f0;
+                overflow: hidden;
+            }
+            .history-table td {
+                display: block;
+                padding: 0.8rem 1rem;
+                text-align: right;
+                position: relative;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .history-table td:last-child {
+                border-bottom: none;
+            }
+            .history-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 1rem;
+                font-weight: 600;
+                color: var(--dark-text);
+                text-align: left;
+            }
+            /* Menambahkan label ke setiap kolom data */
+            .history-table tbody td:nth-of-type(1)::before { content: "Tanggal"; }
+            .history-table tbody td:nth-of-type(2)::before { content: "Mata Pelajaran"; }
+            .history-table tbody td:nth-of-type(3)::before { content: "Status"; }
+            .history-table tbody td:nth-of-type(4)::before { content: "Keterangan"; }
+
+            .attendance-summary {
+                /* [MODIFIKASI] Paksa menjadi 2 kolom agar lebih rapi */
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .header-title h2 {
+                font-size: 1.3rem;
+            }
+            .header-title p {
+                display: none; /* Sembunyikan subjudul di layar sangat kecil */
+            }
+            .tab-nav-item {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+            .card-grid {
+                grid-template-columns: 1fr; /* Pastikan hanya 1 kolom kartu */
+            }
+            .btn-absen, .btn-kirim, .course-card-content a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            .summary-item {
+                padding: 1rem;
+            }
+            .summary-item .count {
+                font-size: 2rem;
             }
         }
     </style>
@@ -664,8 +771,10 @@
             <header class="dashboard-header">
                 <div class="header-title">
                     <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-                    <h2>Materi Saya</h2>
-                    <p>Daftar semua materi, tugas, dan absensi Anda.</p>
+                    <div>
+                        <h2>Materi Saya</h2>
+                        <p>Daftar semua materi, tugas, dan absensi Anda.</p>
+                    </div>
                 </div>
                 <div class="header-actions">
                     <div class="search-bar">
@@ -729,8 +838,8 @@
                             
                             <label for="file-upload-1" class="upload-box">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Klik atau Seret File ke Area Ini</p>
-                                <span>File (PDF, DOCX, JPG, PNG) maks 10MB</span>
+                                <p>Klik atau Seret File</p>
+                                <span>File (PDF, DOCX, JPG) maks 10MB</span>
                             </label>
                             <input type="file" id="file-upload-1" hidden>
                             
@@ -745,7 +854,7 @@
                             <p>Mata Pelajaran: Administrasi Web Server</p>
                             <p class="task-deadline">Deadline: 15 Oktober 2025</p>
                         </div>
-                        <div class="task-actions" style="width:100%; text-align:right;">
+                        <div class="task-actions">
                             <span class="task-status status-completed">Selesai</span>
                         </div>
                     </div>
@@ -756,7 +865,7 @@
                             <p>Mata Pelajaran: Teori Warna Desain Grafis</p>
                             <p class="task-deadline">Deadline: 1 November 2025</p>
                         </div>
-                        <div class="task-actions" style="width:100%; text-align:right;">
+                        <div class="task-actions">
                             <span class="task-status status-due">Belum Selesai</span>
                             <a href="#">Kerjakan Tugas</a>
                         </div>
@@ -799,7 +908,7 @@
                     </div>
             
                     <div class="attendance-history">
-                        <h4>Riwayat Absensi Terakhir</h4>
+                        <h4>Riwayat Absensi</h4>
                         <table class="history-table">
                             <thead>
                                 <tr>
@@ -811,47 +920,46 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>17 Sep 2025</td>
-                                    <td>Dasar Jaringan Komputer</td>
-                                    <td><span class="status-badge badge-hadir">Hadir</span></td>
-                                    <td>-</td>
+                                    <td data-label="Tanggal">17 Sep 2025</td>
+                                    <td data-label="Mata Pelajaran">Dasar Jaringan Komputer</td>
+                                    <td data-label="Status"><span class="status-badge badge-hadir">Hadir</span></td>
+                                    <td data-label="Keterangan">-</td>
                                 </tr>
                                 <tr>
-                                    <td>16 Sep 2025</td>
-                                    <td>Teori Warna Desain Grafis</td>
-                                    <td><span class="status-badge badge-hadir">Hadir</span></td>
-                                    <td>-</td>
+                                    <td data-label="Tanggal">16 Sep 2025</td>
+                                    <td data-label="Mata Pelajaran">Teori Warna Desain Grafis</td>
+                                    <td data-label="Status"><span class="status-badge badge-hadir">Hadir</span></td>
+                                    <td data-label="Keterangan">-</td>
                                 </tr>
                                 <tr>
-                                    <td>15 Sep 2025</td>
-                                    <td>Administrasi Web Server</td>
-                                    <td><span class="status-badge badge-alpa">Alpa</span></td>
-                                    <td>Tanpa Keterangan</td>
+                                    <td data-label="Tanggal">15 Sep 2025</td>
+                                    <td data-label="Mata Pelajaran">Administrasi Web Server</td>
+                                    <td data-label="Status"><span class="status-badge badge-alpa">Alpa</span></td>
+                                    <td data-label="Keterangan">Tanpa Keterangan</td>
                                 </tr>
                                 <tr>
-                                    <td>12 Sep 2025</td>
-                                    <td>Dasar Jaringan Komputer</td>
-                                    <td><span class="status-badge badge-izin">Izin</span></td>
-                                    <td>Acara Keluarga</td>
+                                    <td data-label="Tanggal">12 Sep 2025</td>
+                                    <td data-label="Mata Pelajaran">Dasar Jaringan Komputer</td>
+                                    <td data-label="Status"><span class="status-badge badge-izin">Izin</span></td>
+                                    <td data-label="Keterangan">Acara Keluarga</td>
                                 </tr>
-                                 <tr>
-                                    <td>11 Sep 2025</td>
-                                    <td>Teori Warna Desain Grafis</td>
-                                    <td><span class="status-badge badge-hadir">Hadir</span></td>
-                                    <td>-</td>
+                                <tr>
+                                    <td data-label="Tanggal">11 Sep 2025</td>
+                                    <td data-label="Mata Pelajaran">Teori Warna Desain Grafis</td>
+                                    <td data-label="Status"><span class="status-badge badge-hadir">Hadir</span></td>
+                                    <td data-label="Keterangan">-</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            </main>
+        </main>
     </div>
 
     <script>
         // Logika untuk menu dropdown sidebar
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 const parentLi = toggle.closest('li');
@@ -867,14 +975,10 @@
         // Logika untuk navigasi tab
         const tabNavItems = document.querySelectorAll('.tab-nav-item');
         const tabContents = document.querySelectorAll('.tab-content');
-
         tabNavItems.forEach(item => {
             item.addEventListener('click', () => {
-                // Hapus kelas 'active' dari semua tab nav dan konten
                 tabNavItems.forEach(nav => nav.classList.remove('active'));
                 tabContents.forEach(content => content.classList.remove('active'));
-
-                // Tambahkan kelas 'active' pada tab dan konten yang diklik
                 const tabId = item.getAttribute('data-tab');
                 item.classList.add('active');
                 document.getElementById(tabId).classList.add('active');
@@ -884,65 +988,46 @@
         // Logika untuk tombol mobile menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const sidebar = document.getElementById('sidebar');
-
-        mobileMenuBtn.addEventListener('click', () => {
+        const mainContent = document.querySelector('.main-content');
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             sidebar.classList.toggle('show');
         });
 
         document.addEventListener('click', (event) => {
             if (window.innerWidth <= 1024) {
                 const isClickInsideSidebar = sidebar.contains(event.target);
-                const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
-                if (!isClickInsideSidebar && !isClickOnMenuBtn && sidebar.classList.contains('show')) {
+                if (!isClickInsideSidebar && sidebar.classList.contains('show')) {
                     sidebar.classList.remove('show');
                 }
             }
         });
 
-        // === [BARU] Logika untuk menampilkan nama file yang di-upload ===
+        // Logika untuk menampilkan nama file yang di-upload
         const fileInput1 = document.getElementById('file-upload-1');
         const fileNameDisplay1 = document.getElementById('file-name-1');
-
         if (fileInput1) {
             fileInput1.addEventListener('change', () => {
-                if (fileInput1.files.length > 0) {
-                    // Jika ada file yang dipilih, tampilkan namanya
-                    fileNameDisplay1.textContent = 'File yang dipilih: ' + fileInput1.files[0].name;
-                } else {
-                    // Jika tidak ada file, kosongkan teks
-                    fileNameDisplay1.textContent = '';
-                }
+                fileNameDisplay1.textContent = fileInput1.files.length > 0 ? 'File: ' + fileInput1.files[0].name : '';
             });
         }
         
-        // === [MODIFIKASI] Logika untuk Absensi ===
+        // Logika untuk Absensi (contoh fungsionalitas)
         const btnAbsen = document.getElementById('btn-absen-sekarang');
-        const dailyStatus = document.getElementById('daily-status');
-        const currentDateEl = document.getElementById('current-date');
-        const countPresentEl = document.getElementById('count-present');
-
-        if (btnAbsen) {
-            // Set tanggal hari ini secara dinamis
-            const today = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            currentDateEl.textContent = today.toLocaleDateString('id-ID', options);
-            
+        if(btnAbsen) {
             btnAbsen.addEventListener('click', () => {
-                // Cek jika tombol belum di-disable
-                if (!btnAbsen.classList.contains('disabled')) {
-                    // Update status
-                    dailyStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>Anda Telah Berhasil Absen Hari Ini.</span>';
-                    dailyStatus.classList.remove('status-absent');
-                    dailyStatus.classList.add('status-present');
-
-                    // Update & disable tombol
-                    btnAbsen.innerHTML = '<i class="fas fa-check"></i> <span>Sudah Absen</span>';
-                    btnAbsen.classList.add('disabled', 'success');
-                    
-                    // Update Ringkasan (Contoh)
-                    let currentPresentCount = parseInt(countPresentEl.textContent);
-                    countPresentEl.textContent = currentPresentCount + 1;
-                }
+                const statusElement = document.getElementById('daily-status');
+                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> <span>Anda Sudah Absen Hari Ini.</span>';
+                statusElement.classList.remove('status-absent');
+                statusElement.classList.add('status-present');
+                
+                btnAbsen.textContent = 'Sudah Absen';
+                btnAbsen.classList.add('disabled', 'success');
+                btnAbsen.disabled = true;
+                
+                // Logika untuk update summary (contoh)
+                const countPresent = document.getElementById('count-present');
+                countPresent.textContent = parseInt(countPresent.textContent) + 1;
             });
         }
     </script>

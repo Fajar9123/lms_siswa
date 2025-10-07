@@ -208,6 +208,21 @@
             align-items: center;
             gap: 1rem;
         }
+        
+        .btn-login {
+            background: var(--primary-orange);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            background: #e86a21;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 127, 50, 0.4);
+        }
 
         .mobile-menu-btn {
             display: none;
@@ -267,6 +282,12 @@
             padding: 0.5rem 0;
             display: block;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu-drawer a.btn-login-mobile {
+            border: none;
+            padding: 0;
         }
 
         .mobile-menu-drawer a:hover, .mobile-menu-drawer a.active {
@@ -277,6 +298,22 @@
             margin-top: 2rem;
             flex-direction: column;
             gap: 1rem;
+        }
+        
+        .btn-login-mobile {
+            display: block;
+            width: 100%;
+            background: var(--primary-orange);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login-mobile:hover {
+            background: #e86a21;
         }
 
         /* ==================================== */
@@ -593,7 +630,8 @@
         /* === 5. Keunggulan (Features) Section Styles === */
         /* ==================================================== */
         .features {
-            background: var(--light-white);
+            padding: 4rem 0;
+            background: white;
         }
 
         .features-grid {
@@ -603,8 +641,8 @@
         }
 
         .feature-item {
-            background: white;
-            padding: 2rem;
+            background: var(--light-white);
+            padding: 2.5rem 1.5rem;
             text-align: center;
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
@@ -635,9 +673,8 @@
             color: var(--gray-text);
             font-size: 0.95rem;
         }
-
         /* ==================================== */
-        /* === 8. Footer Styles === */
+        /* === 6. Footer Styles === */
         /* ==================================== */
         footer {
             background: var(--dark-text);
@@ -689,6 +726,15 @@
             color: white;
             padding-left: 5px;
         }
+        
+        .footer-col .contact-info p i {
+            margin-right: 10px;
+            color: var(--primary-orange);
+        }
+        .footer-col .contact-info p {
+            display: flex;
+            align-items: center;
+        }
 
         .social-icons {
             display: flex;
@@ -724,7 +770,7 @@
         }
         
         /* ==================================== */
-        /* === 9. Modal (Pop-up) Styles === */
+        /* === 7. Modal (Pop-up) Styles === */
         /* ==================================== */
         .modal {
             display: none;
@@ -781,15 +827,16 @@
             color: var(--gray-text);
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 0.8rem;
             border-radius: 8px;
             border: 1px solid #ddd;
             font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--primary-orange);
             box-shadow: 0 0 0 2px rgba(255, 127, 50, 0.2);
@@ -815,26 +862,57 @@
             margin-top: 1.5rem;
             font-size: 0.9rem;
         }
+        
+        .modal-toggle a {
+            font-weight: 600;
+        }
 
+        .modal-message {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #dc3545;
+        }
+        
         /* ==================================== */
-        /* === 10. Responsive Design === */
+        /* === 8. Responsive Design === */
         /* ==================================== */
         @media (max-width: 992px) {
-            nav#main-nav {
+            /* Perubahan utama: Sembunyikan navigasi desktop & tampilkan tombol mobile */
+            nav#main-nav, 
+            .header-container .user-actions .btn-login {
                 display: none;
             }
 
             .mobile-menu-btn {
                 display: block;
             }
-            
-            header .user-actions .btn-outline-dark,
-            header .user-actions .btn-primary-orange {
-                display: none;
+        
+            .about-content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
-
-            .program-cards {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            .about-text {
+                text-align: center;
+            }
+            .about-text ul {
+                display: inline-block;
+                text-align: left;
+                margin-top: 1rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .social-icons {
+                justify-content: center;
             }
         }
 
@@ -862,34 +940,6 @@
 
             .programs, .courses, .features, .cta, .stats {
                 padding: 3rem 0;
-            }
-
-            /* [BARU] Responsive About LMS */
-            .about-content-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .about-text {
-                text-align: center;
-            }
-            .about-text ul {
-                display: inline-block;
-                text-align: left;
-                margin-top: 1rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .footer-col h3::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .social-icons {
-                justify-content: center;
             }
         }
 
@@ -920,8 +970,7 @@
                     </ul>
                 </nav>
                 <div class="user-actions">
-                    <button class="btn btn-outline-dark" id="login-btn">Masuk</button>
-                    <button class="btn btn-primary-orange" id="register-btn">Daftar</button>
+                    <a href="login.php" class="btn btn-login">Login</a>
                     <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
                         <i class="fas fa-bars"></i>
                     </button>
@@ -933,18 +982,14 @@
             <span class="close-btn">&times;</span>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="#beranda" class="active"><i class="fas fa-home"></i> Beranda</a></li>
                     <li><a href="jurusan.html"><i class="fas fa-book"></i> Jurusan</a></li>
                     <li><a href="#courses"><i class="fas fa-book-open"></i> Materi</a></li>
                     <li><a href="#fitur"><i class="fas fa-star"></i> Keunggulan</a></li>
+                    <li><a href="login.php" class="btn-login-mobile"><i class="fas fa-sign-in-alt"></i> Login</a></li>
                 </ul>
             </nav>
-            <div class="user-actions">
-                <button class="btn btn-outline-dark" id="mobile-login-btn">Masuk</button>
-                <button class="btn btn-primary-orange" id="mobile-register-btn">Daftar</button>
-            </div>
         </div>
-
         <section class="hero" id="beranda">
             <div class="hero-content">
                 <h2>Selamat Datang di EduLMS</h2>
@@ -1014,13 +1059,13 @@
                             <h3>Bisnis Digital </h3>
                         </div>
                     </a>
-                     <a href="jurusan.html" class="jurusan-card">
+                    <a href="jurusan.html" class="jurusan-card">
                         <img src="img/siswa-jaringan2.png" alt="DKV" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Teknik Komputer dan Jaringan </h3>
                         </div>
                     </a>
-                     <a href="jurusan.html" class="jurusan-card">
+                    <a href="jurusan.html" class="jurusan-card">
                         <img src="img/siswi-dkv.png" alt="DKV" class="jurusan-img">
                         <div class="jurusan-title-wrapper">
                             <h3>Desain Komunikasi Visual</h3>
@@ -1029,334 +1074,139 @@
                 </div>
             </div>
         </section>
-        
+
         <section class="courses" id="courses">
             <div class="container">
-                <div class="section-title">
-                    <h2>Materi Pelajaran Unggulan</h2>
-                    <p>Jelajahi berbagai materi pelajaran interaktif yang disusun oleh para pengajar ahli di bidangnya.</p>
                 </div>
-                <div class="course-filters">
-                    <button class="filter-btn active" data-filter="all">Semua</button>
-                    <button class="filter-btn" data-filter="akuntansi">Akuntansi</button>
-                    <button class="filter-btn" data-filter="perkantoran">Perkantoran</button>
-                    <button class="filter-btn" data-filter="pemasaran">Pemasaran</button>
-                    <button class="filter-btn" data-filter="tkj">TKJ</button>
-                    <button class="filter-btn" data-filter="dkv">DKV</button>
-                </div>
-                <div class="course-grid">
-                    <div class="course-card" data-category="akuntansi">
-                        <div class="course-img"><img src="img/course-akuntansi-1.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category akuntansi-category">Akuntansi</span>
-                            <h3>Siklus Akuntansi Perusahaan Jasa</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 18 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 45 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card" data-category="perkantoran">
-                        <div class="course-img"><img src="img/course-perkantoran-1.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category perkantoran-category">Perkantoran</span>
-                            <h3>Manajemen Kearsipan Digital</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 12 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 30 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card" data-category="pemasaran">
-                        <div class="course-img"><img src="img/course-pemasaran-1.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category pemasaran-category">Pemasaran</span>
-                            <h3>Dasar-dasar Pemasaran Digital</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 20 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 50 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card" data-category="tkj">
-                        <div class="course-img"><img src="img/course-tkj-1.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category tkj-category">TKJ</span>
-                            <h3>Administrasi Jaringan Cisco</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 25 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 60 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card" data-category="dkv">
-                        <div class="course-img"><img src="img/course-dkv-1.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category dkv-category">DKV</span>
-                            <h3>Prinsip Desain Grafis & Tipografi</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 22 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 55 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card" data-category="tkj">
-                        <div class="course-img"><img src="img/course-tkj-2.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category tkj-category">TKJ</span>
-                            <h3>Keamanan Siber Fundamental</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 15 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 40 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="course-card" data-category="dkv">
-                        <div class="course-img"><img src="img/course-dkv-2.jpg" alt="Course"></div>
-                        <div class="course-content">
-                            <span class="course-category dkv-category">DKV</span>
-                            <h3>Dasar Videografi & Editing</h3>
-                            <div class="course-info">
-                                <span class="icon-text"><i class="fas fa-book-open"></i> 18 Pelajaran</span>
-                                <span class="icon-text"><i class="fas fa-clock"></i> 48 Jam</span>
-                            </div>
-                            <div class="course-footer">
-                                <div class="rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="course-price">Mulai Belajar</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
-
+        
         <section class="features" id="fitur">
             <div class="container">
                 <div class="section-title">
-                    <h2>Mengapa Memilih EduLMS?</h2>
-                    <p>Kami menyediakan fasilitas terbaik untuk mendukung proses belajar mengajar yang efektif dan menyenangkan.</p>
+                    <h2>Kenapa Memilih EduLMS?</h2>
+                    <p>Kami menawarkan berbagai fitur unggulan untuk mengoptimalkan proses belajar dan mengajar di SMK.</p>
                 </div>
                 <div class="features-grid">
                     <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-book-reader"></i></div>
-                        <h3>Materi Terstruktur</h3>
-                        <p>Semua materi disusun sesuai dengan kurikulum terbaru dan kebutuhan industri saat ini.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Kurikulum Terkini</h3>
+                        <p>Konten pembelajaran kami selalu diperbarui sesuai dengan standar industri dan kebutuhan dunia kerja.</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
-                        <h3>Akses Fleksibel 24/7</h3>
-                        <p>Belajar kapan saja dan di mana saja melalui laptop atau smartphone Anda tanpa batasan waktu.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>Pengajar Berpengalaman</h3>
+                        <p>Dibimbing langsung oleh para profesional dan praktisi yang ahli di bidangnya masing-masing.</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                        <h3>Instruktur Ahli</h3>
-                        <p>Diajar oleh guru-guru berpengalaman yang merupakan ahli di bidangnya masing-masing.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Kerja Sama Industri</h3>
+                        <p>Kami menjalin kolaborasi dengan perusahaan terkemuka untuk program magang dan penempatan kerja.</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-tasks"></i></div>
-                        <h3>Latihan Interaktif</h3>
-                        <p>Uji pemahaman Anda melalui kuis, tugas, dan ujian online yang interaktif dan menantang.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Sertifikasi Keahlian</h3>
+                        <p>Dapatkan sertifikat kompetensi yang diakui setelah menyelesaikan setiap program keahlian.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        
         <footer>
             <div class="container footer-container">
-                <div class="footer-col">
-                    <h3>EduLMS</h3>
-                    <p>Platform pembelajaran online untuk siswa SMK Jakarta Timur 1, menyediakan materi berkualitas untuk menunjang karir masa depan.</p>
+                <div class="footer-col about-us">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h1>EduLMS</h1>
+                    </div>
+                    <p>Platform terintegrasi untuk mendukung proses belajar mengajar di lingkungan SMK.</p>
                     <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                <div class="footer-col">
-                    <h3>Navigasi</h3>
+
+                <div class="footer-col quick-links">
+                    <h3>Menu</h3>
                     <ul>
                         <li><a href="#beranda">Beranda</a></li>
                         <li><a href="#jurusan">Jurusan</a></li>
                         <li><a href="#courses">Materi</a></li>
                         <li><a href="#fitur">Keunggulan</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Bantuan</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h3>Kontak</h3>
+
+                <div class="footer-col services">
+                    <h3>Layanan</h3>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Jl. Pendidikan No. 1, Jakarta Timur</li>
-                        <li><i class="fas fa-phone"></i> (021) 123-4567</li>
-                        <li><i class="fas fa-envelope"></i> info@smkjt1.sch.id</li>
+                        <li><a href="#">E-Modul</a></li>
+                        <li><a href="#">Quiz Online</a></li>
+                        <li><a href="#">Video Pembelajaran</a></li>
+                        <li><a href="#">Forum Diskusi</a></li>
+                        <li><a href="#">Absensi Online</a></li>
+                        <li><a href="#">Ujian Kompetensi</a></li>
                     </ul>
+                </div>
+
+                <div class="footer-col contact">
+                    <h3>Kontak Kami</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Jalan Pendidikan No. 123, Jakarta</p>
+                        <p><i class="fas fa-phone"></i> +62 812 3456 7890</p>
+                        <p><i class="fas fa-envelope"></i> info@edulms.sch.id</p>
+                    </div>
                 </div>
             </div>
             <div class="copyright">
-                &copy; 2025 EduLMS - SMK Jakarta Timur 1. All Rights Reserved.
+                <p>&copy; 2024 EduLMS. All Rights Reserved.</p>
             </div>
         </footer>
-    </div>
 
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Masuk Akun</h2>
-            <form>
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required>
-                </div>
-                <button type="submit" class="btn btn-primary-orange" style="width: 100%;">Masuk</button>
-                <p class="modal-toggle">Belum punya akun? <a href="#" id="show-register">Daftar di sini</a></p>
-            </form>
-        </div>
-    </div>
-
-    <div id="register-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Buat Akun Baru</h2>
-            <form>
-                 <div class="form-group">
-                    <label for="register-name">Nama Lengkap</label>
-                    <input type="text" id="register-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Email</label>
-                    <input type="email" id="register-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Password</label>
-                    <input type="password" id="register-password" required>
-                </div>
-                <!-- <button type="submit" class="btn btn-primary-orange" style="width: 100%;">Daftar</button> -->
-                  <button onclick="location.href='user/user.html'" class="btn btn-primary-orange" style="width: 100%;">Daftar</button>   
-                <p class="modal-toggle">Sudah punya akun? <a href="#" id="show-login">Masuk di sini</a></p>
-            </form>
-        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile Menu
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenuDrawer = document.getElementById('mobile-menu');
-            const closeMenuBtn = mobileMenuDrawer.querySelector('.close-btn');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeBtn = document.querySelector('#mobile-menu .close-btn');
+        const body = document.body;
 
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenuDrawer.classList.add('is-active');
-            });
-            closeMenuBtn.addEventListener('click', () => {
-                mobileMenuDrawer.classList.remove('is-active');
-            });
-             mobileMenuDrawer.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuDrawer.classList.remove('is-active');
-                });
-            });
+        // Fungsi untuk membuka sidebar
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('is-active');
+            body.style.overflow = 'hidden'; // Mencegah scrolling pada body
+        });
 
-            // Modal Logic
-            const loginModal = document.getElementById('login-modal');
-            const registerModal = document.getElementById('register-modal');
-            const loginBtns = [document.getElementById('login-btn'), document.getElementById('mobile-login-btn')];
-            const registerBtns = [document.getElementById('register-btn'), document.getElementById('mobile-register-btn')];
-            const closeBtns = document.querySelectorAll('.modal .close-btn');
-            const showRegisterLink = document.getElementById('show-register');
-            const showLoginLink = document.getElementById('show-login');
+        // Fungsi untuk menutup sidebar
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('is-active');
+            body.style.overflow = 'auto'; // Mengembalikan scrolling pada body
+        });
+        
+        // Menutup sidebar jika di-klik di luar area menu
+        window.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('is-active');
+                body.style.overflow = 'auto';
+            }
+        });
 
-            const openModal = (modal) => modal.classList.add('show');
-            const closeModal = (modal) => modal.classList.remove('show');
-
-            loginBtns.forEach(btn => btn.addEventListener('click', () => openModal(loginModal)));
-            registerBtns.forEach(btn => btn.addEventListener('click', () => openModal(registerModal)));
-            closeBtns.forEach(btn => btn.addEventListener('click', () => {
-                closeModal(loginModal);
-                closeModal(registerModal);
-            }));
-            
-            showRegisterLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                closeModal(loginModal);
-                openModal(registerModal);
-            });
-            
-            showLoginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                closeModal(registerModal);
-                openModal(loginModal);
-            });
-
-            window.addEventListener('click', (e) => {
-                if (e.target === loginModal) closeModal(loginModal);
-                if (e.target === registerModal) closeModal(registerModal);
-            });
-            
-            // Course Filter Logic
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const courseCards = document.querySelectorAll('.course-card');
-
-            // Show all cards initially
-            courseCards.forEach(card => card.classList.add('show'));
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Update active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    const filter = button.getAttribute('data-filter');
-                    
-                    // Show/hide cards based on filter
-                    courseCards.forEach(card => {
-                        card.classList.remove('show');
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                            card.classList.add('show');
-                        }
-                    });
-                });
+        // Menutup sidebar saat salah satu link di dalamnya diklik
+        const navLinks = document.querySelectorAll('#mobile-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('is-active');
+                body.style.overflow = 'auto';
             });
         });
     </script>
