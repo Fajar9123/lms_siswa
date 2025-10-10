@@ -121,7 +121,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="update_password_admin.php">
+        <form method="POST" action="update_pass_admin.php">
             <div class="form-group">
                 <label for="nip">NIP Admin</label>
                 <input type="text" id="nip" name="nip" placeholder="Masukkan NIP Admin" required>

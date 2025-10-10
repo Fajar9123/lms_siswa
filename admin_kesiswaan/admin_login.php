@@ -21,7 +21,7 @@ if (isset($_SESSION['role'])) {
 
 // Sertakan konfigurasi database
 // Pastikan file db_config.php sudah tersedia dan menginisialisasi $pdo
-require_once 'db_config.php';
+require_once '../koneksi/db_config.php';
 
 $message = '';
 $message_type = '';
@@ -39,9 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message_type = 'error';
     } else {
         try {
-            // PENTING: Menggunakan Prepared Statement untuk Mencegah SQL Injection.
-            // Tanda tanya (?) adalah placeholder.
-            $stmt = $pdo->prepare("SELECT user_id, password, role FROM users WHERE nip = ?");
+            // PERUBAHAN UTAMA DI SINI: Ganti 'users' menjadi 'admin'
+            $stmt = $pdo->prepare("SELECT user_id, password, role FROM admin WHERE nip = ?");
             // Data pengguna ($nip) dieksekusi terpisah, menjadikannya aman.
             $stmt->execute([$nip]); 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -218,7 +217,6 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
 <body>
     <div class="login-container">
         <div class="header">
-            <!-- Icon dan judul yang menandakan ini adalah panel Admin -->
             <h1><i class="fas fa-user-shield" style="color:var(--primary-dark);"></i> PANEL ADMIN</h1>
             <p>Sistem Informasi Sekolah</p>
         </div>
@@ -233,7 +231,6 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
         <form method="POST" action="admin_login.php">
             <div class="form-group">
                 <label for="nip">NIP Admin</label>
-                <!-- htmlspecialchars() mencegah XSS (Cross-Site Scripting) -->
                 <input type="text" id="nip" name="nip" placeholder="Masukkan NIP Admin" required value="<?php echo htmlspecialchars($nip); ?>">
             </div>
             <div class="form-group">

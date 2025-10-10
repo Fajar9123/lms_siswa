@@ -12,6 +12,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect ke halaman login
-header('Location: login.php?msg=Anda berhasil keluar.&status=success');
+header('Location: admin_login.php?msg=Anda berhasil keluar.&status=success');
 exit;
 ?>
