@@ -8,7 +8,7 @@ session_start();
 // Jika sudah login, cek role. Jika bukan Admin, paksa log out atau redirect.
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] === 'Admin') {
-        header('Location: admin.php');
+        header('Location: dashboard.php');
         exit;
     } else {
         // Jika Guru atau Wali Kelas mencoba mengakses URL ini, hancurkan sesi dan redirect
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['role'] = $user['role'];
 
                     // Redirect ke Dashboard Admin
-                    header('Location: admin.php');
+                    header('Location: dashboard.php');
                     exit;
 
                 } else {

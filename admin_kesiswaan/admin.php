@@ -842,7 +842,7 @@ $users_data = getUsers($pdo, $search_term);
                     <div class="role"><?= $current_user_role ?></div>
                 </div>
                 <nav class="sidebar-menu">
-                    <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                     <a href="admin.php" class="active"><i class="fas fa-users-cog"></i> Manajemen Pengguna</a>
                     <a href="#"><i class="fas fa-book"></i> Manajemen Mapel</a>
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> Manajemen Kelas</a>
@@ -965,8 +965,8 @@ $users_data = getUsers($pdo, $search_term);
         </div>
 
         <footer>
-            <p>© 2025 SMK JTI. Hak Cipta Dilindungi.</p>
-            <p>Dikembangkan oleh <a href="#">Muhammad Fajarudin</a></p>
+            <p>© 2025 SMK Jakarta Timur 1. Hak Cipta Dilindungi.</p>
+            <p>Dikembangkan oleh <a href="http://portfoliofajar.vercel.app/">Muhammad Fajarudin</a></p>
         </footer>
         </div>
 
