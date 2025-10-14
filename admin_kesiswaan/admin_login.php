@@ -2,6 +2,7 @@
 // ====================================================================
 // admin_login.php: LOGIKA AUTENTIKASI KHUSUS ADMIN
 // MENGGUNAKAN PREPARED STATEMENTS (PDO) UNTUK MENCEGAH SQL INJECTION
+// TEMA: HIJAU PUTIH | UKURAN LOGO: 120px | UKURAN BOX: Normal
 // ====================================================================
 
 session_start();
@@ -92,13 +93,15 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logojt1.png" type="image/png">
     <title>Login Admin - Sistem Sekolah</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-color: #0d6efd; /* Warna biru untuk Admin */
-            --primary-dark: #0a58ca;
+            /* PERUBAHAN TEMA: Hijau Putih */
+            --primary-color: #2ecc71; /* Warna Hijau cerah */
+            --primary-dark: #27ae60;  /* Warna Hijau gelap */
             --secondary-color: #ffffff;
             --bg-page: #f0f4f8;
             --text-dark: #2c3e50;
@@ -117,27 +120,33 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
             min-height: 100vh;
             padding: 20px;
         }
+        /* START: PERUBAHAN UKURAN BOKS KONTAINER */
         .login-container {
             background-color: var(--secondary-color);
-            padding: 40px;
+            padding: 30px; /* Padding dikurangi (sebelumnya 40px) */
             border-radius: var(--border-radius-md);
             box-shadow: var(--box-shadow-login);
             width: 100%;
-            max-width: 400px;
+            max-width: 380px; /* Lebar dikurangi (sebelumnya 400px) */
             transition: all 0.3s ease;
         }
+        /* END: PERUBAHAN UKURAN BOKS KONTAINER */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px; /* Margin dikurangi (sebelumnya 30px) */
+        }
+        .header img.logo {
+             /* CSS untuk logo.png */
+            width: 120px; /* Ukuran logo DITINGKATKAN */
+            height: 120px; /* Ukuran logo DITINGKATKAN */
+            margin-bottom: 15px;
+            object-fit: contain; /* Memastikan gambar tidak terdistorsi */
         }
         .header h1 {
             font-size: 1.8em;
             font-weight: 700;
             color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            /* Menghapus flex dan ikon di h1 karena diganti dengan logo di atasnya */
         }
         .header p {
             font-size: 0.9em;
@@ -167,7 +176,8 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
         .form-group input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2); /* Sesuai warna Admin */
+            /* Warna bayangan disesuaikan dengan Hijau */
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2); 
         }
         .password-toggle-icon {
             position: absolute;
@@ -191,13 +201,15 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); /* Sesuai warna Admin */
+            /* Warna bayangan disesuaikan dengan Hijau */
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); 
             margin-top: 10px;
         }
         button[type="submit"]:hover {
             background-color: var(--primary-dark);
             transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.4);
+            /* Warna bayangan disesuaikan dengan Hijau */
+            box-shadow: 0 6px 15px rgba(46, 204, 113, 0.4);
         }
         .alert {
             padding: 15px;
@@ -217,7 +229,8 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
 <body>
     <div class="login-container">
         <div class="header">
-            <h1><i class="fas fa-user-shield" style="color:var(--primary-dark);"></i> PANEL ADMIN</h1>
+            <img src="../img/logojt1.png" alt="Logo Aplikasi" class="logo"> 
+            <h1>PANEL ADMIN</h1>
             <p>Sistem Informasi Sekolah</p>
         </div>
         

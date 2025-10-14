@@ -9,25 +9,43 @@ session_start();
 require_once '../koneksi/db_config.php';
 
 // --- PERIKSA AUTENTIKASI DAN ROLE ---
-if (!isset($_SESSION['user_id'])) {
-    header('Location: admin_login.php');
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    header('Location: login.php');
     exit;
 }
 
 // **HANYA IZINKAN ROLE WALI_KELAS**
 if ($_SESSION['role'] !== 'Wali_Kelas') {
-    // Redirect ke halaman yang sesuai jika bukan Wali Kelas
-    header('Location: admin_login.php?access=denied_role');
+    // Hancurkan sesi sebelum redirect jika role salah
+    session_unset();
+    session_destroy();
+    header('Location: login.php?access=denied_role');
     exit;
 }
 
+// ==============================================================================
+// 🔑 PERBAIKAN FINAL ANTI-BENTROK: AMBIL DATA KRITIS DAN TUTUP SESI
+// ==============================================================================
 $logged_in_user_id = $_SESSION['user_id'];
+$logged_in_role = $_SESSION['role']; 
+
+// 🚨 TINDAKAN TEGAS: Pastikan kunci 'nama' di sesi DIBERSIHKAN
+// Ini mencegah bentrok data jika ada sisa sesi dari user lain.
+if (isset($_SESSION['nama'])) {
+    unset($_SESSION['nama']);
+}
+
+// Tutup sesi SEGERA. Melepaskan kunci sesi untuk mencegah tabrakan/penundaan I/O sesi.
+session_write_close(); 
+// Setelah baris ini, JANGAN PERNAH mengakses $_SESSION lagi.
+// ==============================================================================
+
 $message = '';
 $message_type = '';
-$alerts = []; // Array untuk menampung berbagai pesan peringatan
+$alerts = []; 
 
 // Data Utama Wali Kelas (dari tabel 'admin')
-$current_user_name = "Pengguna Tidak Dikenal";
+$current_user_name = "Pengguna Tidak Dikenal"; // Nama akan diambil dari DB
 $current_user_role = "Undefined Role";
 $current_user_profile_pic = "../img/logosmkjt1.png"; // PATH GAMBAR DEFAULT
 
@@ -43,22 +61,32 @@ $female_students = 0;
 $raport_status = "N/A"; 
 $raport_color = "warning"; 
 $raport_icon = "question-circle";
-$students_missing_data = 0; // Tambahan untuk kualitas data
-$students_absent_today = 3; // Contoh data dinamis
+$students_missing_data = 0; 
+$students_absent_today = 3; 
 
 if ($pdo && $logged_in_user_id) {
     try {
-        // 1. Ambil data profil Wali Kelas
+        // 1. Ambil data profil Wali Kelas (Menggunakan ID yang sudah diamankan $logged_in_user_id)
         $stmt_user = $pdo->prepare("SELECT nama, role, profile_pic FROM admin WHERE user_id = ?");
         $stmt_user->execute([$logged_in_user_id]);
         $current_user_data = $stmt_user->fetch(PDO::FETCH_ASSOC);
 
         if ($current_user_data) {
+            // ✅ Nama Diambil dari DATABASE, BUKAN dari sesi. Ini adalah kunci fix.
             $current_user_name = htmlspecialchars($current_user_data['nama']);
-            $current_user_role = str_replace('_', ' ', htmlspecialchars($current_user_data['role']));
+            // Menggunakan $logged_in_role yang sudah disimpan dari sesi awal
+            $current_user_role = str_replace('_', ' ', htmlspecialchars($logged_in_role)); 
             if (!empty($current_user_data['profile_pic'])) {
                 $current_user_profile_pic = htmlspecialchars($current_user_data['profile_pic']);
             }
+        } else {
+            // Logika jika ID di sesi tidak valid di DB (seharusnya tidak terjadi)
+            // Hancurkan sesi dan redirect ke login
+            session_start();
+            session_unset();
+            session_destroy();
+            header('Location: login.php?error=user_not_found');
+            exit;
         }
 
         // 2. Ambil Penugasan Kelas dari tabel 'wali_kelas_assignment'
@@ -75,7 +103,7 @@ if ($pdo && $logged_in_user_id) {
             $stmt_students->execute([$assigned_class_name]);
             $students_data = $stmt_students->fetchAll(PDO::FETCH_ASSOC);
             
-            // --- TAMBAHAN: HITUNG STATISTIK SISWA DAN KUALITAS DATA ---
+            // --- LOGIKA STATISTIK SISWA ---
             $total_students = count($students_data);
             
             if ($total_students > 0) {
@@ -89,25 +117,23 @@ if ($pdo && $logged_in_user_id) {
                         $female_students++;
                     }
                     
-                    // Cek kelengkapan data kunci (Contoh: Alamat atau Nama Ayah kosong)
                     if (empty($student['alamat']) || empty($student['nama_ayah'])) {
                         $students_missing_data++;
                     }
                 }
                 
                 // Logika Status Raport
-                // GANTI INI DENGAN LOGIKA DATABASE NYATA (misal: jumlah nilai sikap yang terisi)
                 if ($total_students >= 20) { 
                     $raport_status = "Siap Diperiksa"; 
                     $raport_color = "success"; 
                     $raport_icon = "check-circle";
                 } elseif ($total_students > 0) {
-                    $raport_status = "Input Sikap (30%)"; // Contoh Persentase
+                    $raport_status = "Input Sikap (30%)";
                     $raport_color = "info"; 
                     $raport_icon = "edit";
                 }
 
-                // Tambahkan ALERTS berdasarkan data
+                // Tambahkan ALERTS
                 if ($students_missing_data > 0) {
                     $alerts[] = [
                         'type' => 'warning',
@@ -121,12 +147,10 @@ if ($pdo && $logged_in_user_id) {
                     ];
                 }
 
-
             } else {
                  $message = "Kelas $assigned_class_name masih kosong. Segera input data siswa."; 
                  $message_type = 'info';
             }
-            // --- END TAMBAHAN STATISTIK DAN ALERTS ---
 
         } else {
             $message = "Anda belum ditugaskan sebagai wali kelas untuk kelas manapun. Hubungi Administrator.";
@@ -138,6 +162,9 @@ if ($pdo && $logged_in_user_id) {
         $message = "Terjadi kesalahan database: " . $e->getMessage();
         $message_type = 'error';
     }
+} else if (!$pdo) {
+     $message = "Koneksi database gagal. Hubungi administrator sistem.";
+     $message_type = 'error';
 }
 // --- END DYNAMIC DATA SETUP ---
 
@@ -151,7 +178,7 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Wali Kelas | Kelas: <?php echo $assigned_class_name; ?> - SMK JTI</title>
     
@@ -309,7 +336,7 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
         /* Card Statistik (Info Box Grid) */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Dikecilkan sedikit */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -458,7 +485,7 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
             .main-content {
                 margin-left: 0;
                 width: 100%;
-                padding-top: 80px; /* Space for the toggle button */
+                padding-top: 80px; 
             }
             .menu-toggle {
                 display: block;
@@ -470,13 +497,12 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
         }
 
         @media (max-width: 600px) {
-            /* ... (CSS Responsif Tabel Siswa Tetap Sama) ... */
             .container { padding: 20px; border-radius: var(--border-radius-md); }
             .main-content { padding: 15px; }
             h1 { font-size: 1.5em; flex-direction: column; align-items: flex-start; gap: 10px; }
             .class-info-box { flex-direction: column; align-items: flex-start; gap: 10px; }
             .class-info-box .detail h3 { font-size: 1.5em; }
-            .class-info-box .icon { display: none; } /* Sembunyikan ikon di mobile */
+            .class-info-box .icon { display: none; } 
 
             /* Penyesuaian Mobile untuk Card Statistik */
             .stats-grid { gap: 10px; }
@@ -704,24 +730,15 @@ if (isset($_GET['status']) && isset($_GET['msg'])) {
             const overlay = document.getElementById('overlay');
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
-            
-            // Nonaktifkan scroll body saat sidebar aktif
-            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : 'auto';
         }
 
-        // Tutup sidebar jika ukuran layar berubah dari mobile ke desktop
-        window.addEventListener('resize', () => {
+        // Untuk layar yang lebih besar, tutup sidebar jika terbuka
+        window.addEventListener('resize', function() {
             if (window.innerWidth > 1024) {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('overlay');
-                if (sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
             }
         });
     </script>
-
 </body>
 </html>

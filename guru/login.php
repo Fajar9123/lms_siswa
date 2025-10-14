@@ -1,6 +1,6 @@
 <?php
 // ====================================================================
-// login.php: HALAMAN LOGIN KHUSUS UNTUK USER NON-ADMIN
+// login.php: HALAMAN LOGIN KHUSUS UNTUK USER NON-ADMIN (SUDAH DIPERBAIKI)
 // ====================================================================
 
 session_start();
@@ -35,6 +35,7 @@ $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
+    // Pastikan variabel $pdo tersedia dari db_config.php
     if (!isset($pdo) || !$pdo) {
         $error_message = "Koneksi database gagal. Silakan coba lagi.";
     } else {
@@ -53,26 +54,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($user && password_verify($password, $user['password'])) { 
                     
                     $non_admin_roles = ['Guru_Mapel', 'Wali_Kelas', 'Kepala_Jurusan', 'Guru_BK'];
+                    
+                    // Verifikasi apakah role adalah salah satu role non-admin
                     if (!in_array($user['role'], $non_admin_roles)) {
-                        $error_message = "NIP atau Password salah. Mohon periksa kembali.";
+                        $error_message = "NIP atau Password salah, atau akun Anda tidak memiliki akses ke halaman ini.";
                         goto end_login;
                     }
 
-                    // Login Berhasil
+                    // ==================================================================
+                    // 🔑 PERBAIKAN 1: REGENERASI ID SESI (KUNCI UTAMA)
+                    // Mencegah Session Fixation dan penukaran sesi antar pengguna.
+                    // ==================================================================
                     session_regenerate_id(true); 
                     
-                    // **KUNCI PERBAIKAN DI SINI:** Nama di-set langsung ke Sesi.
+                    // Set variabel sesi
                     $_SESSION['user_id'] = $user['user_id'];
                     $_SESSION['nama'] = htmlspecialchars($user['nama']); 
                     $_SESSION['role'] = $user['role'];
                     
+                    // ==================================================================
+                    // 🔑 PERBAIKAN 2: TUTUP PENULISAN SESI SEGERA
+                    // Memastikan sesi disimpan dan lock dilepaskan sebelum redirect.
+                    // ==================================================================
+                    session_write_close(); 
+
                     redirectToDashboard($user['role']);
 
                 } else {
                     $error_message = "NIP atau Password salah. Mohon periksa kembali.";
                 }
             } catch (PDOException $e) {
-                error_log("Login DB Error: " . $e->getMessage());
+                error_log("Login DB Error: " . $e->getMessage()); 
                 $error_message = "Terjadi kesalahan server saat mencoba login. Silakan coba lagi nanti.";
             }
         }
@@ -147,13 +159,15 @@ end_login:
             font-size: 0.9em;
         }
 
-        .logo {
-            font-size: 3em;
-            color: var(--primary-color);
+        .logo-image { 
             margin-bottom: 15px;
             display: block;
+            max-width: 100px; 
+            height: auto; 
+            margin-left: auto; 
+            margin-right: auto; 
         }
-
+        
         .form-group {
             margin-bottom: 20px;
             text-align: left;
@@ -287,7 +301,9 @@ end_login:
 </head>
 <body>
     <div class="login-container">
-        <div class="logo"><i class="fas fa-chalkboard-teacher"></i></div>
+        
+        <img src="../img/logojt1.png" alt="Logo Aplikasi" class="logo-image">
+        
         <div class="header">
             <h1>LOGIN GURU & STAF</h1>
             <p>Masukkan NIP dan Password Anda untuk akses dashboard</p>
@@ -321,7 +337,7 @@ end_login:
         </form>
         
         <p>
-            Khusus Admin? <a href="admin_login.php">Login di sini</a>.
+            Khusus Admin? <a href="../admin_kesiswaan/admin_login.php">Login di sini</a>.
         </p>
 
     </div>
